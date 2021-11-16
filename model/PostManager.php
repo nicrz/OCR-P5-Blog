@@ -1,30 +1,32 @@
 <?php
+
+namespace App\Model;
+
 class PostManager
 {
+    protected $oDb;
+
+    public function __construct()
+    {
+        $this->oDb = new \App\Engine\Db;
+    }
+
     public function getPosts()
     {
-        $db = $this->dbConnect();
-        $req = $db->query('SELECT * FROM article
-         INNER JOIN utilisateur ON article.idAuteur = utilisateur.id
-         ORDER BY maj DESC');
-
-        return $req;
+        $oStmt = $this->oDb->prepare('SELECT article.id, titre, chapo, contenu, maj, utilisateur.nom, utilisateur.prenom
+        FROM article
+        INNER JOIN utilisateur ON article.idAuteur = utilisateur.id
+        ORDER BY maj DESC');
+        $oStmt->execute();
+        return $oStmt->fetchAll(\PDO::FETCH_OBJ);
     }
 
-    public function getPost($postId)
+    public function getById($id)
     {
-        $db = $this->dbConnect();
-        $req = $db->prepare('SELECT * FROM article WHERE id = ?');
-        $req->execute(array($postId));
-        $post = $req->fetch();
-
-        return $post;
+        $oStmt = $this->oDb->prepare('SELECT * FROM article WHERE id = :postId');
+        $oStmt->bindParam(':postId', $id, \PDO::PARAM_INT);
+        $oStmt->execute();
+        return $oStmt->fetch(\PDO::FETCH_OBJ);
     }
 
-
-    private function dbConnect()
-    {
-        $db = new PDO('mysql:host=localhost;dbname=blog-p5;charset=utf8', 'root', '');
-        return $db;
-    }
 }

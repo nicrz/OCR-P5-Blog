@@ -1,24 +1,31 @@
 <?php
+require 'vendor/autoload.php';
 
-namespace App;
+use App\Controller\HomeController as HomeController;
+use App\Controller\PostController as PostController;
 
 
-require('controller/PostController.php');
-require('controller/HomeController.php');
+$router = new AltoRouter();
+$HomeController = new HomeController();
+$PostController = new PostController();
 
-if (isset($_GET['action'])) {
-    if ($_GET['action'] == 'listPosts') {
-        listPosts();
+$router->setBasePath('/OCR-P5-Blog');
+$router->map('GET','/', [$HomeController, "home"]);
+$router->map('GET','/index.php', [$HomeController, "home"]);
+$router->map('GET','/home', [$HomeController, "home"]);
+$router->map('GET','/blog', [$PostController, "postsList"]);
+$router->map('GET','/post/[i:id]', [$PostController, "post"]);
+
+
+
+$match = $router->match();
+
+if($match && is_callable($match['target'])) {
+    if(!empty($match['params'])){
+        call_user_func($match['target'], $match['params']);
+    }else{
+        call_user_func($match['target']);
     }
-    elseif ($_GET['action'] == 'post') {
-        if (isset($_GET['id']) && $_GET['id'] > 0) {
-            post();
-        }
-        else {
-            echo 'Erreur : aucun identifiant de billet envoyé';
-        }
-    }
-}
-else {
-    home();
+} else {
+    $HomeController->notFound();
 }

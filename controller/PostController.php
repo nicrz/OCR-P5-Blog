@@ -2,24 +2,39 @@
 
 namespace App\Controller;
 
-// Chargement des classes
-require_once('model/PostManager.php');
+use App\Model\PostManager;
 
-function listPosts()
+
+class PostController extends MainController
 {
-    $postManager = new PostManager(); // Création d'un objet
-    $posts = $postManager->getPosts(); // Appel d'une fonction de cet objet
+    private $PostManager;
 
-    require('view/listPostsView.php');
-}
+    public function __construct()
+    {
+        parent::__construct();
 
-function post()
-{
-    $postManager = new PostManager();
-    $commentManager = new CommentManager();
+        $this->PostManager = new PostManager();
 
-    $post = $postManager->getPost($_GET['id']);
-    $comments = $commentManager->getComments($_GET['id']);
+    }
 
-    require('view/postView.php');
+    public function postsList()
+    {
+        $posts = $this->PostManager->getPosts();
+
+        $this->twig->display('listPostsView.html.twig', ['posts' => $posts]);
+    }
+
+    public function post($request)
+    {
+
+        $post = $this->PostManager->getById($request['id']);
+
+        $this->twig->display('post.html.twig', ['post' => $post]);
+    }
+
+    public function notFound()
+    {
+        $this->twig->display('not_found.html.twig', ['message' => 'Erreur 404']);
+    }
+
 }

@@ -21,6 +21,12 @@ class ComposerStaticInitbc1a550d0f8ac5b652edb9f31aa36013
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Polyfill\\Ctype\\' => 23,
         ),
+        'A' => 
+        array (
+            'App\\Model\\' => 10,
+            'App\\Engine\\' => 11,
+            'App\\Controller\\' => 15,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -36,6 +42,18 @@ class ComposerStaticInitbc1a550d0f8ac5b652edb9f31aa36013
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
         ),
+        'App\\Model\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/model',
+        ),
+        'App\\Engine\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/engine',
+        ),
+        'App\\Controller\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/controller',
+        ),
     );
 
     public static $prefixesPsr0 = array (
@@ -48,12 +66,17 @@ class ComposerStaticInitbc1a550d0f8ac5b652edb9f31aa36013
         ),
     );
 
+    public static $classMap = array (
+        'AltoRouter' => __DIR__ . '/..' . '/altorouter/altorouter/AltoRouter.php',
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInitbc1a550d0f8ac5b652edb9f31aa36013::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitbc1a550d0f8ac5b652edb9f31aa36013::$prefixDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInitbc1a550d0f8ac5b652edb9f31aa36013::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitbc1a550d0f8ac5b652edb9f31aa36013::$classMap;
 
         }, null, ClassLoader::class);
     }
