@@ -20,6 +20,9 @@ $router->map('GET','/post/[i:id]', [$PostController, "post"]);
 $router->map('GET','/login', [$LoginController, "loginPage"]);
 $router->map('POST','/authenticate', [$LoginController, "checkLogin"]);
 $router->map('GET','/logout', [$LoginController, "logout"]);
+$router->map('POST','/addcomment', [$PostController, "addComment"]);
+$router->map('GET','/comment_validation/[i:id]', [$PostController, "validateComment"]);
+$router->map('GET','/comment_delete/[i:id]', [$PostController, "removeComment"]);
 
 
 

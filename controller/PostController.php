@@ -32,8 +32,60 @@ class PostController extends MainController
     {
 
         $post = $this->PostManager->getById($request['id']);
+        $comments = $this->CommentManager->getCommentsFromPost($request['id']);
+        $pendingcomments = $this->CommentManager->getPendingCommentsFromPost($request['id']);
 
-        $this->twig->display('post.html.twig', ['post' => $post]);
+        if (!empty($_SESSION['id'])){
+
+            $awaitingcomment = $this->CommentManager->checkIfCommentAwaiting($request['id'], $_SESSION['id']);
+    
+            $this->twig->display('post.html.twig', ['post' => $post, 'comments' => $comments, 'pendingcomments' => $pendingcomments, 'awaitingcomment' => $awaitingcomment]);
+
+        }else{
+
+            $this->twig->display('post.html.twig', ['post' => $post, 'comments' => $comments, 'pendingcomments' => $pendingcomments]);
+
+        }
+
+    }
+
+    public function addComment()
+    {
+        $postId = $_POST['postid'];
+        $userId = $_POST['userid'];
+        $comment = $_POST['commentaire'];
+
+        $add = $this->CommentManager->addComment($comment, $postId, $userId);
+
+        if ($add == true){        
+            header('Location: ' . $_SERVER['HTTP_REFERER']);         
+        }else{
+            echo 'Erreur. Redirection dans 3 secondes...';
+            header('refresh:3;url=' . $_SERVER['HTTP_REFERER']);
+        }
+
+    }
+
+    public function validateComment($request)
+    {
+
+        if ($_SESSION['type'] == 2){
+        $add = $this->CommentManager->updateCommentStatus(1, $request['id']);
+        }
+   
+        header('Location: ' . $_SERVER['HTTP_REFERER']);         
+
+    }
+
+    public function removeComment($request)
+    {
+
+        if ($_SESSION['type'] == 2){
+        $add = $this->CommentManager->deleteComment($request['id']);
+        }
+   
+        header('Location: ' . $_SERVER['HTTP_REFERER']);         
+
     }
 
     public function notFound()
