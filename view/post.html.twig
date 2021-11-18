@@ -24,5 +24,89 @@
             </div>
         </article>
 
+        <comments class="mb-4">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+
+<center><h3>Commentaires</h3></center><p></p>
+
+{% if session.id is not empty and session.type == 2 %}
+
+<center><h5>Commentaires en attente de validation :</h5></center><p></p>
+
+{% if pendingcomments is not null %}
+
+{% for comment in pendingcomments %}
+
+<div style="background-color: #FF641A; padding: 0.5rem;">
+<i>Par <strong>{{ comment.prenom }} {{ comment.nom }}</strong> le {{ comment.date }} :</i> <div style="float: right"><a href="http://localhost/OCR-P5-Blog/comment_validation/{{ comment.id }}" onclick="return confirm('Etes-vous sûr de vouloir valider ce commentaire?')"><img src="http://localhost/OCR-P5-Blog/public/assets/img/validate.png" /></a> <a href="http://localhost/OCR-P5-Blog/comment_delete/{{ comment.id }}" onclick="return confirm('Etes-vous sûr de vouloir supprimer ce commentaire?')"><img src="http://localhost/OCR-P5-Blog/public/assets/img/delete.png" /></a></div><br />
+{{ comment.contenu }}
+</div><br />
+
+{% endfor %}
+
+<center><h5>Commentaires validés :</h5></center><p></p>
+
+{% else %}
+
+<center>Aucun commentaire en attente de validation pour l'instant.</center>
+
+{% endif %}
+
+{% endif %}
+
+{% if comments is not null %}
+
+{% for comment in comments %}
+
+<div style="background-color: #E4E4E4; padding: 0.5rem;">
+<i>Par <strong>{{ comment.prenom }} {{ comment.nom }}</strong> le {{ comment.date }} :</i> {% if session.id is not empty and session.type == 2 %} <div style="float: right"><a href="http://localhost/OCR-P5-Blog/comment_delete/{{ comment.id }}" onclick="return confirm('Etes-vous sûr de vouloir supprimer ce commentaire?')"><img src="http://localhost/OCR-P5-Blog/public/assets/img/delete.png" /></a></div> {% endif %}<br />
+{{ comment.contenu }}
+</div><br />
+
+{% endfor %}
+
+{% else %}
+
+<center>Aucun commentaire pour l'instant.</center>
+
+{% endif %}
+
+                    <center><div class="col-md-10 col-lg-8 col-xl-7">
+                        <p><h3>Ecrire un commentaire</h3></p>
+                        <div class="my-5">
+
+                        {% if session.id is not empty %}
+
+                        {% if awaitingcomment %} <i>Vous avez un commentaire en attente de validation.</i> {% endif %}
+
+                            <form id="commentForm" method="POST" action="http://localhost/OCR-P5-Blog/addcomment">
+                            <input type="hidden" name="postid" value="{{ post.id }}" />
+                            <input type="hidden" name="userid" value="{{ session.id }}" />
+                                <div class="form-floating">
+                                    <textarea class="form-control" id="commentaire" name="commentaire" placeholder="Rédigez votre commentaire ici..." style="height: 12rem" required></textarea>
+                                    <label for="message">Message</label>
+                                    <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
+                                </div>
+                                <br />
+
+                             <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Envoyer</button>
+                            </form>
+
+                        {% else %}
+
+                        <i>Vous devez <strong><a href="http://localhost/OCR-P5-Blog/login">vous connecter</a></strong> pour poster un commentaire.</i>
+
+                        {% endif %}
+                               
+                        </div>
+                    </div></center>
+
+                    </div>
+                </div>
+            </div>
+        </comments>
+
 
 {% include 'footer.html.twig' %}
