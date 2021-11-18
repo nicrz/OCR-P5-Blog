@@ -1,0 +1,49 @@
+ {% include 'base.html.twig' %}       
+        
+        <!-- Page Header-->
+        <header class="masthead" style="background-image: url('assets/img/contact-bg.jpg')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="page-heading">
+                            <h1>Identification</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main Content-->
+        <main class="mb-4">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="my-5">
+                            <form id="login" method="POST" action="authenticate">
+                                <div class="form-floating">
+                                    <input class="form-control" id="email" name="email" type="email" placeholder="Entrez votre e-mail" required />
+                                    <label for="email">E-mail</label>
+                                    <div class="invalid-feedback" data-sb-feedback="email:required">L'e-mail est requis.</div>
+                                    <div class="invalid-feedback" data-sb-feedback="email:email">L'e-mail n'est pas valide</div>
+                                </div>
+                                <div class="form-floating">
+                                    <input class="form-control" id="pwd" name="pwd" type="password" placeholder="Entrez votre mot de passe" required />
+                                    <label for="pwd">Mot de passe</label>
+                                    <div class="invalid-feedback" data-sb-feedback="pwd:required">Ce champ est requis.</div>
+                                </div>
+                                <br />
+
+                                <!-- Submit error message-->
+                                <!---->
+                                <!-- This is what your users will see when there is-->
+                                <!-- an error submitting the form-->
+                                <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
+                                <!-- Submit Button-->
+                                <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Connexion</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+{% include 'footer.html.twig' %}

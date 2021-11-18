@@ -5,14 +5,21 @@
                     Menu
                     <i class="fas fa-bars"></i>
                 </button>
+                
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto py-4 py-lg-0">
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="http://localhost/OCR-P5-Blog">Accueil</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="http://localhost/OCR-P5-Blog/blog">Blog</a></li>
+                        {% if session.id is not empty and session.type == 2 %}
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="#">Ajouter un article</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="#">Connexion</a></li>
+                        {% endif %}
+                        {% if session.id is empty %}
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="http://localhost/OCR-P5-Blog/login">Connexion</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="#">Inscription</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="#">Déconnexion</a></li>
+                        {% endif %}
+                        {% if session.id is not empty %}
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="http://localhost/OCR-P5-Blog/logout">Déconnexion (<i>connecté en tant que {{ session.nom }} {{ session.prenom }}</i>)</a></li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>

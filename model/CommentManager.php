@@ -22,8 +22,9 @@ class CommentManager
 
     public function getCommentsFromPost($id)
     {
-        $oStmt = $this->oDb->prepare('SELECT *
+        $oStmt = $this->oDb->prepare('SELECT commentaire.id, contenu, date, valide, utilisateur.nom, utilisateur.prenom
         FROM commentaire
+        INNER JOIN utilisateur on commentaire.idUtilisateur = utilisateur.id
         WHERE idArticle = :postId
         ORDER BY date DESC');
         $oStmt->bindParam(':postId', $id, \PDO::PARAM_INT);

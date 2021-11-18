@@ -14,6 +14,7 @@ class HomeController extends MainController
 
     public function home()
     {
+        
         $this->twig->display('home.html.twig');
     }
 

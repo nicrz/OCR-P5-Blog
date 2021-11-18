@@ -3,11 +3,13 @@ require 'vendor/autoload.php';
 
 use App\Controller\HomeController as HomeController;
 use App\Controller\PostController as PostController;
+use App\Controller\LoginController as LoginController;
 
 
 $router = new AltoRouter();
 $HomeController = new HomeController();
 $PostController = new PostController();
+$LoginController = new LoginController();
 
 $router->setBasePath('/OCR-P5-Blog');
 $router->map('GET','/', [$HomeController, "home"]);
@@ -15,6 +17,9 @@ $router->map('GET','/index.php', [$HomeController, "home"]);
 $router->map('GET','/home', [$HomeController, "home"]);
 $router->map('GET','/blog', [$PostController, "postsList"]);
 $router->map('GET','/post/[i:id]', [$PostController, "post"]);
+$router->map('GET','/login', [$LoginController, "loginPage"]);
+$router->map('POST','/authenticate', [$LoginController, "checkLogin"]);
+$router->map('GET','/logout', [$LoginController, "logout"]);
 
 
 

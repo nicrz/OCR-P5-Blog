@@ -27,4 +27,18 @@ class UserManager
         return $oStmt->fetch(\PDO::FETCH_OBJ);
     }
 
+    public function login($email, $password)
+    {
+        $oStmt = $this->oDb->prepare('SELECT * FROM utilisateur WHERE email = :email');
+        $oStmt->bindParam(':email', $email, \PDO::PARAM_INT);
+        $oStmt->execute();
+        $user = $oStmt->fetch(\PDO::FETCH_OBJ);
+
+        if ($user && password_verify($password, $user->motdepasse)){
+            return $user;
+        }else{
+            return false;
+        }
+    }
+
 }

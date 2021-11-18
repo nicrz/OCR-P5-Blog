@@ -3,17 +3,21 @@
 namespace App\Controller;
 
 use App\Model\PostManager;
+use App\Model\CommentManager;
+use App\Engine\Session;
 
 
 class PostController extends MainController
 {
     private $PostManager;
+    private $CommentManager;
 
     public function __construct()
     {
         parent::__construct();
 
         $this->PostManager = new PostManager();
+        $this->CommentManager = new CommentManager();
 
     }
 
