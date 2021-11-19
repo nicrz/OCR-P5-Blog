@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Model\PostManager;
 use App\Model\CommentManager;
+use App\Model\UserManager;
 use App\Engine\Session;
 
 
@@ -18,6 +19,7 @@ class PostController extends MainController
 
         $this->PostManager = new PostManager();
         $this->CommentManager = new CommentManager();
+        $this->UserManager = new UserManager();
 
     }
 
@@ -46,6 +48,72 @@ class PostController extends MainController
             $this->twig->display('post.html.twig', ['post' => $post, 'comments' => $comments, 'pendingcomments' => $pendingcomments]);
 
         }
+
+    }
+
+    public function addPost()
+    {
+
+        if ($_SESSION['type'] == 2){
+            $this->twig->display('post_add.html.twig');
+        }else{
+            header('Location: home');  
+        }
+        
+    }
+
+    public function addPostConfirm()
+    {
+
+        if ($_SESSION['type'] == 2){
+        $title = $_POST['titre'];
+        $chapo = $_POST['chapo'];
+        $content = $_POST['contenu'];      
+        $add = $this->PostManager->addPost($title, $chapo, $content, $_SESSION['id']);
+        }
+   
+        header('Location: blog');         
+
+    }
+
+    public function editPost($request)
+    {
+
+        if ($_SESSION['type'] == 2){
+        $post = $this->PostManager->getById($request['id']);
+        $users = $this->UserManager->getUsers();
+
+        $this->twig->display('post_edit.html.twig', ['post' => $post, 'users' => $users]);
+
+        }else{
+            header('Location: home');  
+        }
+    }
+
+    public function editPostConfirm()
+    {
+
+        if ($_SESSION['type'] == 2){
+        $postid = $_POST['postid'];  
+        $title = $_POST['titre'];
+        $chapo = $_POST['chapo'];
+        $content = $_POST['contenu'];   
+        $author = $_POST['auteur'];      
+        $add = $this->PostManager->editPost($postid, $title, $chapo, $content, $author);
+        }
+   
+        header('Location: ' . $_SERVER['HTTP_REFERER']);         
+
+    }
+
+    public function removePost($request)
+    {
+
+        if ($_SESSION['type'] == 2){
+        $add = $this->PostManager->deletePost($request['id']);
+        }
+   
+        header('Location: ' . $_SERVER['HTTP_REFERER']);         
 
     }
 

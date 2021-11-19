@@ -23,6 +23,11 @@ $router->map('GET','/logout', [$LoginController, "logout"]);
 $router->map('POST','/addcomment', [$PostController, "addComment"]);
 $router->map('GET','/comment_validation/[i:id]', [$PostController, "validateComment"]);
 $router->map('GET','/comment_delete/[i:id]', [$PostController, "removeComment"]);
+$router->map('GET','/post_edit/[i:id]', [$PostController, "editPost"]);
+$router->map('POST','/post_edit_confirm', [$PostController, "editPostConfirm"]);
+$router->map('GET','/post_add', [$PostController, "addPost"]);
+$router->map('POST','/post_add_confirm', [$PostController, "addPostConfirm"]);
+$router->map('GET','/post_delete/[i:id]', [$PostController, "removePost"]);
 
 
 

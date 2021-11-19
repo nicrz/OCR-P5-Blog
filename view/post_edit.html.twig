@@ -1,0 +1,55 @@
+ {% include 'base.html.twig' %}       
+        
+        <!-- Page Header-->
+        <header class="masthead" style="background-image: url('assets/img/contact-bg.jpg')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="page-heading">
+                            <h1>Modification de {{ post.titre }}</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main Content-->
+        <main class="mb-4">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="my-5">
+                            <form id="login" method="POST" action="http://localhost/OCR-P5-Blog/post_edit_confirm">
+                                <div class="form-floating">
+                                    <input type="hidden" name="postid" value="{{ post.id }}" />
+                                    <input class="form-control" id="titre" name="titre" type="text" value="{{ post.titre }}" placeholder="Titre de l'article" required />
+                                    <label for="titre">Titre de l'article</label>
+                                </div>
+                                <div class="form-floating">
+                                    <input class="form-control" id="chapo" name="chapo" type="text" value="{{ post.chapo }}" placeholder="Chapo de l'article" required />
+                                    <label for="chapo">Chapo de l'article</label>
+                                </div>
+                                <div class="form-floating">
+                                    <textarea class="form-control" id="contenu" name="contenu" placeholder="Contenu de l'article" style="height: 12rem" required>{{ post.contenu }}</textarea>
+                                    <label for="message">Contenu</label>
+                                    <div class="invalid-feedback" data-sb-feedback="message:required">Le contenu est requis.</div>
+                                </div>
+                                <br />
+                                <h5>Auteur</h5>
+                                <div class="form-floating">
+                                    <select id="auteur" name="auteur">
+                                        {% for user in users %}
+                                        <option value="{{ user.id }}"{% if user.id == post.idAuteur %}selected{% endif %}>{{ user.nom }} {{ user.prenom }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <br />
+
+                                <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Modifier</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+{% include 'footer.html.twig' %}
