@@ -7,6 +7,10 @@
                             <h1>{{ post.titre }}</h1>
                             
                         </div>
+                                        {% if session.id is not empty and session.type == 2 %}
+                <center><a href="http://localhost/OCR-P5-Blog/post_edit/{{ post.id }}"><button class="btn btn-primary text-uppercase">Modifier cet article</button></a>
+                <a href="http://localhost/OCR-P5-Blog/post_delete/{{ post.id }}" onclick="return confirm('Etes-vous sûr de vouloir supprimer cet article?')"><button class="btn btn-primary text-uppercase" style="background-color: red;">Supprimer cet article</button></a></center>
+                {% endif %}
                     </div>
                 </div>
             </div>
@@ -14,10 +18,17 @@
         <!-- Post Content-->
         <article class="mb-4">
             <div class="container px-4 px-lg-5">
+            
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
 
-{{ post.contenu }}
+                    <div style="float: left">Par <strong>{{ post.nom }} {{ post.prenom }}</strong></div>
+                    <div style="float: right"><i>Le {{ post.maj }}</i></div>
+                    <br />
+
+<p><center><strong>{{ post.chapo }}</strong></center></p>
+
+<p>{{ post.contenu }}</p>
 
                     </div>
                 </div>
