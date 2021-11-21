@@ -27,6 +27,26 @@ class UserManager
         return $oStmt->fetch(\PDO::FETCH_OBJ);
     }
 
+    public function editUser($userid, $nom, $prenom, $identifiant, $email, $actif, $type)
+    {
+        $oStmt = $this->oDb->prepare('UPDATE utilisateur 
+        SET nom = :nom, 
+        prenom = :prenom,
+        identifiant = :identifiant,
+        email = :email,
+        actif = :actif,
+        type = :type
+        WHERE id = :userid');
+        $oStmt->bindParam(':userid', $userid, \PDO::PARAM_INT);
+        $oStmt->bindParam(':nom', $nom, \PDO::PARAM_STR);
+        $oStmt->bindParam(':prenom', $prenom, \PDO::PARAM_STR);
+        $oStmt->bindParam(':identifiant', $identifiant, \PDO::PARAM_STR);
+        $oStmt->bindParam(':email', $email, \PDO::PARAM_STR);
+        $oStmt->bindParam(':actif', $actif, \PDO::PARAM_INT);
+        $oStmt->bindParam(':type', $type, \PDO::PARAM_INT);
+        $oStmt->execute();
+    }
+
     public function login($email, $password)
     {
         $oStmt = $this->oDb->prepare('SELECT * FROM utilisateur WHERE email = :email');

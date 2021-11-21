@@ -4,12 +4,15 @@ require 'vendor/autoload.php';
 use App\Controller\HomeController as HomeController;
 use App\Controller\PostController as PostController;
 use App\Controller\LoginController as LoginController;
+use App\Controller\AdminController as AdminController;
+
 
 
 $router = new AltoRouter();
 $HomeController = new HomeController();
 $PostController = new PostController();
 $LoginController = new LoginController();
+$AdminController = new AdminController();
 
 $router->setBasePath('/OCR-P5-Blog');
 $router->map('GET','/', [$HomeController, "home"]);
@@ -28,7 +31,9 @@ $router->map('POST','/post_edit_confirm', [$PostController, "editPostConfirm"]);
 $router->map('GET','/post_add', [$PostController, "addPost"]);
 $router->map('POST','/post_add_confirm', [$PostController, "addPostConfirm"]);
 $router->map('GET','/post_delete/[i:id]', [$PostController, "removePost"]);
-
+$router->map('GET','/users_list', [$AdminController, "usersList"]);
+$router->map('GET','/user_edit/[i:id]', [$AdminController, "userEdit"]);
+$router->map('POST','/user_edit_confirm', [$AdminController, "userEditConfirm"]);
 
 
 $match = $router->match();
