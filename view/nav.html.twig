@@ -14,6 +14,9 @@
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="http://localhost/OCR-P5-Blog/login">Connexion</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="#">Inscription</a></li>
                         {% endif %}
+                        {% if session.id is not empty and session.type == 2 %}
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="http://localhost/OCR-P5-Blog/users_list">Administration</a></li>
+                        {% endif %}
                         {% if session.id is not empty %}
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="http://localhost/OCR-P5-Blog/logout">Déconnexion (<i>connecté en tant que {{ session.nom }} {{ session.prenom }}</i>)</a></li>
                         {% endif %}

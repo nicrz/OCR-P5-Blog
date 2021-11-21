@@ -57,7 +57,7 @@ class PostController extends MainController
         if ($_SESSION['type'] == 2){
             $this->twig->display('post_add.html.twig');
         }else{
-            header('Location: home');  
+            header('Location: /OCR-P5-Blog');
         }
         
     }
@@ -86,7 +86,7 @@ class PostController extends MainController
         $this->twig->display('post_edit.html.twig', ['post' => $post, 'users' => $users]);
 
         }else{
-            header('Location: home');  
+            header('Location: /OCR-P5-Blog');
         }
     }
 
@@ -113,7 +113,7 @@ class PostController extends MainController
         $add = $this->PostManager->deletePost($request['id']);
         }
    
-        header('Location: ' . $_SERVER['HTTP_REFERER']);         
+        header('Location: /OCR-P5-Blog');       
 
     }
 
@@ -141,7 +141,7 @@ class PostController extends MainController
         $add = $this->CommentManager->updateCommentStatus(1, $request['id']);
         }
    
-        header('Location: ' . $_SERVER['HTTP_REFERER']);         
+        header('Location: /OCR-P5-Blog');       
 
     }
 
@@ -152,7 +152,7 @@ class PostController extends MainController
         $add = $this->CommentManager->deleteComment($request['id']);
         }
    
-        header('Location: ' . $_SERVER['HTTP_REFERER']);         
+        header('Location: /OCR-P5-Blog');       
 
     }
 

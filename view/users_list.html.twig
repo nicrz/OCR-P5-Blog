@@ -1,0 +1,49 @@
+ {% include 'base.html.twig' %}
+        <header class="masthead" style="background-image: url('assets/img/home-bg.jpg')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">
+                            <h1>Administration</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main Content-->
+        <div class="container px-4 px-lg-5">
+
+            <center><h2>Liste des utilisateurs</h2></center>
+
+            <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Prénom</th>
+      <th scope="col">Identifiant</th>
+      <th scope="col">Email</th>
+      <th scope="col">Actif</th>
+      <th scope="col">Rôle</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for user in users %}
+    <tr>
+      <th scope="row">{{ user.id }}</th>
+      <td>{{ user.nom }}</td>
+      <td>{{ user.prenom }}</td>
+      <td>{{ user.identifiant }}</td>
+      <td>{{ user.email }}</td>
+      <td>{% if user.actif == 0 %}Inactif{% else %}Actif{% endif %}</td>
+      <td>{% if user.type == 1 %}Membre{% else %}Administrateur{% endif %}</td>
+      <td><a href="http://localhost/OCR-P5-Blog/user_edit/{{ user.id }}"><img src="http://localhost/OCR-P5-Blog/public/assets/img/edit.png" /></a></td>
+      <td><a href="http://localhost/OCR-P5-Blog/user_delete/{{ user.id }}" onclick="return confirm('Etes-vous sûr de vouloir supprimer cet utilisateur?')"><img src="http://localhost/OCR-P5-Blog/public/assets/img/delete.png" /></a></td>
+    </tr>
+  {% endfor %}
+
+  </tbody>
+</table>
+
+        </div>
+{% include 'footer.html.twig' %}

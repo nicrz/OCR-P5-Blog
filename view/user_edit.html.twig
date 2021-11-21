@@ -1,0 +1,67 @@
+ {% include 'base.html.twig' %}       
+        
+        <!-- Page Header-->
+        <header class="masthead" style="background-image: url('assets/img/contact-bg.jpg')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="page-heading">
+                            <h1>Modification de {{ user.nom }} {{ user.prenom }} </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main Content-->
+        <main class="mb-4">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="my-5">
+                            <form id="login" method="POST" action="http://localhost/OCR-P5-Blog/user_edit_confirm">
+                                <div class="form-floating">
+                                    <input type="hidden" name="userid" value="{{ user.id }}" />
+                                    <input class="form-control" id="nom" name="nom" type="text" value="{{ user.nom }}" placeholder="Nom" required />
+                                    <label for="titre">Nom</label>
+                                </div>
+                                <div class="form-floating">
+                                    <input class="form-control" id="prenom" name="prenom" type="text" value="{{ user.prenom }}" placeholder="Prenom" required />
+                                    <label for="titre">Prénom</label>
+                                </div>
+                                <div class="form-floating">
+                                    <input class="form-control" id="identifiant" name="identifiant" type="text" value="{{ user.identifiant }}" placeholder="Identifiant" required />
+                                    <label for="identifiant">Identifiant</label>
+                                </div>
+                                <div class="form-floating">
+                                    <input class="form-control" id="email" name="email" type="text" value="{{ user.email }}" placeholder="Email" required />
+                                    <label for="email">Email</label>
+                                </div>
+                                <br />
+                                <h5>Etat</h5>
+                                <div class="form-floating">
+                                    <select id="actif" name="actif">      
+                                        <option value="0"{% if user.actif == 0 %}selected{% endif %}>Inactif</option>
+                                        <option value="1"{% if user.actif == 1 %}selected{% endif %}>Actif</option>                                      
+                                    </select>
+                                </div>
+                                <br />
+
+                                <h5>Etat</h5>
+                                <div class="form-floating">
+                                    <select id="type" name="type">      
+                                        <option value="1"{% if user.type == 1 %}selected{% endif %}>Membre</option>
+                                        <option value="2"{% if user.type == 2 %}selected{% endif %}>Administrateur</option>                                      
+                                    </select>
+                                </div>
+                                <br />
+                                
+
+                                <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Modifier</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+{% include 'footer.html.twig' %}
