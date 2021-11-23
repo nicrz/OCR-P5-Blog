@@ -27,6 +27,47 @@ class UserManager
         return $oStmt->fetch(\PDO::FETCH_OBJ);
     }
 
+    public function checkEmailExistence($email)
+    {
+        $oStmt = $this->oDb->prepare('SELECT * FROM utilisateur WHERE email = :email');
+        $oStmt->bindParam(':email', $email, \PDO::PARAM_STR);
+        $oStmt->execute();
+        $res = $oStmt->fetch(\PDO::FETCH_OBJ);
+
+        if ($res){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function checkIdExistence($identifiant)
+    {
+        $oStmt = $this->oDb->prepare('SELECT * FROM utilisateur WHERE identifiant = :identifiant');
+        $oStmt->bindParam(':identifiant', $identifiant, \PDO::PARAM_STR);
+        $oStmt->execute();
+        $res = $oStmt->fetch(\PDO::FETCH_OBJ);
+
+        if ($res){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function addUser($nom, $prenom, $identifiant, $email, $motdepasse)
+    {
+        $oStmt = $this->oDb->prepare('INSERT INTO utilisateur (nom, prenom, identifiant, email, motdepasse, actif, type)
+        VALUES
+        (:nom, :prenom, :identifiant, :email, :motdepasse, 0, 1)');
+        $oStmt->bindParam(':nom', $nom, \PDO::PARAM_STR);
+        $oStmt->bindParam(':prenom', $prenom, \PDO::PARAM_STR);
+        $oStmt->bindParam(':identifiant', $identifiant, \PDO::PARAM_STR);
+        $oStmt->bindParam(':email', $email, \PDO::PARAM_STR);
+        $oStmt->bindParam(':motdepasse', $motdepasse, \PDO::PARAM_STR);
+        $oStmt->execute();
+    }
+
     public function editUser($userid, $nom, $prenom, $identifiant, $email, $actif, $type)
     {
         $oStmt = $this->oDb->prepare('UPDATE utilisateur 
