@@ -2,13 +2,15 @@
 
 namespace App\Model;
 
-class CommentManager
+use App\Engine\Db as DB;
+
+class CommentModel
 {
     protected $oDb;
 
     public function __construct()
     {
-        $this->oDb = new \App\Engine\Db;
+        $this->oDb = new DB;
     }
 
     public function getComments()

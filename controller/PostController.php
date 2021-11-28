@@ -2,30 +2,30 @@
 
 namespace App\Controller;
 
-use App\Model\PostManager;
-use App\Model\CommentManager;
-use App\Model\UserManager;
+use App\Model\PostModel;
+use App\Model\CommentModel;
+use App\Model\UserModel;
 use App\Engine\Session;
 
 
 class PostController extends MainController
 {
-    private $PostManager;
-    private $CommentManager;
+    private $PostModel;
+    private $CommentModel;
 
     public function __construct()
     {
         parent::__construct();
 
-        $this->PostManager = new PostManager();
-        $this->CommentManager = new CommentManager();
-        $this->UserManager = new UserManager();
+        $this->PostModel = new PostModel();
+        $this->CommentModel = new CommentModel();
+        $this->UserModel = new UserModel();
 
     }
 
     public function postsList()
     {
-        $posts = $this->PostManager->getPosts();
+        $posts = $this->PostModel->getPosts();
 
         $this->twig->display('listPostsView.html.twig', ['posts' => $posts]);
     }
@@ -33,13 +33,13 @@ class PostController extends MainController
     public function post($request)
     {
 
-        $post = $this->PostManager->getById($request['id']);
-        $comments = $this->CommentManager->getCommentsFromPost($request['id']);
-        $pendingcomments = $this->CommentManager->getPendingCommentsFromPost($request['id']);
+        $post = $this->PostModel->getById($request['id']);
+        $comments = $this->CommentModel->getCommentsFromPost($request['id']);
+        $pendingcomments = $this->CommentModel->getPendingCommentsFromPost($request['id']);
 
         if (!empty($_SESSION['id'])){
 
-            $awaitingcomment = $this->CommentManager->checkIfCommentAwaiting($request['id'], $_SESSION['id']);
+            $awaitingcomment = $this->CommentModel->checkIfCommentAwaiting($request['id'], $_SESSION['id']);
     
             $this->twig->display('post.html.twig', ['post' => $post, 'comments' => $comments, 'pendingcomments' => $pendingcomments, 'awaitingcomment' => $awaitingcomment]);
 
@@ -69,7 +69,7 @@ class PostController extends MainController
         $title = $_POST['titre'];
         $chapo = $_POST['chapo'];
         $content = $_POST['contenu'];      
-        $add = $this->PostManager->addPost($title, $chapo, $content, $_SESSION['id']);
+        $add = $this->PostModel->addPost($title, $chapo, $content, $_SESSION['id']);
         }
    
         header('Location: blog');         
@@ -80,8 +80,8 @@ class PostController extends MainController
     {
 
         if ($_SESSION['type'] == 2){
-        $post = $this->PostManager->getById($request['id']);
-        $users = $this->UserManager->getUsers();
+        $post = $this->PostModel->getById($request['id']);
+        $users = $this->UserModel->getUsers();
 
         $this->twig->display('post_edit.html.twig', ['post' => $post, 'users' => $users]);
 
@@ -99,7 +99,7 @@ class PostController extends MainController
         $chapo = $_POST['chapo'];
         $content = $_POST['contenu'];   
         $author = $_POST['auteur'];      
-        $add = $this->PostManager->editPost($postid, $title, $chapo, $content, $author);
+        $add = $this->PostModel->editPost($postid, $title, $chapo, $content, $author);
         }
    
         header('Location: ' . $_SERVER['HTTP_REFERER']);         
@@ -110,7 +110,7 @@ class PostController extends MainController
     {
 
         if ($_SESSION['type'] == 2){
-        $add = $this->PostManager->deletePost($request['id']);
+        $add = $this->PostModel->deletePost($request['id']);
         }
    
         header('Location: /OCR-P5-Blog');       
@@ -123,7 +123,7 @@ class PostController extends MainController
         $userId = $_POST['userid'];
         $comment = $_POST['commentaire'];
 
-        $add = $this->CommentManager->addComment($comment, $postId, $userId);
+        $add = $this->CommentModel->addComment($comment, $postId, $userId);
 
         if ($add == true){        
             header('Location: ' . $_SERVER['HTTP_REFERER']);         
@@ -138,7 +138,7 @@ class PostController extends MainController
     {
 
         if ($_SESSION['type'] == 2){
-        $add = $this->CommentManager->updateCommentStatus(1, $request['id']);
+        $add = $this->CommentModel->updateCommentStatus(1, $request['id']);
         }
    
         header('Location: /OCR-P5-Blog');       
@@ -149,7 +149,7 @@ class PostController extends MainController
     {
 
         if ($_SESSION['type'] == 2){
-        $add = $this->CommentManager->deleteComment($request['id']);
+        $add = $this->CommentModel->deleteComment($request['id']);
         }
    
         header('Location: /OCR-P5-Blog');       

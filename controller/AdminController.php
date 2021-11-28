@@ -2,26 +2,26 @@
 
 namespace App\Controller;
 
-use App\Model\UserManager;
+use App\Model\UserModel;
 
 
 class AdminController extends MainController
 {
 
-    private $UserManager;
+    private $UserModel;
 
     public function __construct()
     {
         parent::__construct();
 
-        $this->UserManager = new UserManager();
+        $this->UserModel = new UserModel();
 
     }
 
     public function usersList()
     {
         if ($_SESSION['type'] == 2){
-            $users = $this->UserManager->getUsers();
+            $users = $this->UserModel->getUsers();
             $this->twig->display('users_list.html.twig', ['users' => $users]);
         }else{
             header('Location: /OCR-P5-Blog');
@@ -32,7 +32,7 @@ class AdminController extends MainController
     public function userEdit($request)
     {
         if ($_SESSION['type'] == 2){
-            $user = $this->UserManager->getUserById($request['id']);
+            $user = $this->UserModel->getUserById($request['id']);
             $this->twig->display('user_edit.html.twig', ['user' => $user]);
         }else{
             header('Location: /OCR-P5-Blog');
@@ -51,7 +51,7 @@ class AdminController extends MainController
         $email = $_POST['email'];  
         $actif = $_POST['actif'];    
         $type = $_POST['type'];    
-        $edit = $this->UserManager->editUser($userid, $nom, $prenom, $identifiant, $email, $actif, $type);
+        $edit = $this->UserModel->editUser($userid, $nom, $prenom, $identifiant, $email, $actif, $type);
         }
    
         header('Location: ' . $_SERVER['HTTP_REFERER']);         

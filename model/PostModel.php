@@ -2,13 +2,15 @@
 
 namespace App\Model;
 
-class PostManager
+use App\Engine\Db as DB;
+
+class PostModel
 {
     protected $oDb;
 
     public function __construct()
     {
-        $this->oDb = new \App\Engine\Db;
+        $this->oDb = new DB;
     }
 
     public function getPosts()

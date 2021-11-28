@@ -2,13 +2,15 @@
 
 namespace App\Model;
 
-class UserManager
+use App\Engine\Db as DB;
+
+class UserModel
 {
     protected $oDb;
 
     public function __construct()
     {
-        $this->oDb = new \App\Engine\Db;
+        $this->oDb = new DB;
     }
 
     public function getUsers()
@@ -57,15 +59,17 @@ class UserManager
 
     public function addUser($nom, $prenom, $identifiant, $email, $motdepasse)
     {
-        $oStmt = $this->oDb->prepare('INSERT INTO utilisateur (nom, prenom, identifiant, email, motdepasse, actif, type)
+        $oStmt = $this->oDb->prepare('INSERT INTO utilisateur (nom, prenom, identifiant, email, motdepasse)
         VALUES
-        (:nom, :prenom, :identifiant, :email, :motdepasse, 0, 1)');
+        (:nom, :prenom, :identifiant, :email, :motdepasse)');
         $oStmt->bindParam(':nom', $nom, \PDO::PARAM_STR);
         $oStmt->bindParam(':prenom', $prenom, \PDO::PARAM_STR);
         $oStmt->bindParam(':identifiant', $identifiant, \PDO::PARAM_STR);
         $oStmt->bindParam(':email', $email, \PDO::PARAM_STR);
         $oStmt->bindParam(':motdepasse', $motdepasse, \PDO::PARAM_STR);
+        $oStmt->debugDumpParams();
         $oStmt->execute();
+        
     }
 
     public function editUser($userid, $nom, $prenom, $identifiant, $email, $actif, $type)
@@ -91,7 +95,7 @@ class UserManager
     public function login($email, $password)
     {
         $oStmt = $this->oDb->prepare('SELECT * FROM utilisateur WHERE email = :email');
-        $oStmt->bindParam(':email', $email, \PDO::PARAM_INT);
+        $oStmt->bindParam(':email', $email, \PDO::PARAM_STR);
         $oStmt->execute();
         $user = $oStmt->fetch(\PDO::FETCH_OBJ);
 

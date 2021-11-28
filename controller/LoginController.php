@@ -2,19 +2,19 @@
 
 namespace App\Controller;
 
-use App\Model\UserManager;
+use App\Model\UserModel;
 use App\Engine\Session;
 
 
 class LoginController extends MainController
 {
-    private $UserManager;
+    private $UserModel;
 
     public function __construct()
     {
         parent::__construct();
 
-        $this->UserManager = new UserManager();
+        $this->UserModel = new UserModel();
 
     }
 
@@ -29,11 +29,11 @@ class LoginController extends MainController
         $emailSended = $_POST['email'];
         $passwordSended = $_POST['pwd'];
 
-        $userChecked = $this->UserManager->login($emailSended, $passwordSended);
+        $userChecked = $this->UserModel->login($emailSended, $passwordSended);
 
         if ($userChecked != false){
             foreach ($userChecked as $key => $value){
-                session_start();
+                //session_start();
                 Session::set($key, $value);
                 header('Location: blog');
             }
@@ -60,12 +60,13 @@ class LoginController extends MainController
         $motdepasse = $_POST['motdepasse'];
         $motdepasseconf = $_POST['motdepasseconf'];
 
-        $emailCheck = $this->UserManager->checkEmailExistence($email);
-        $idCheck = $this->UserManager->checkIdExistence($identifiant);
+        $emailCheck = $this->UserModel->checkEmailExistence($email);
+        $idCheck = $this->UserModel->checkIdExistence($identifiant);
 
         if ($motdepasse == $motdepasseconf){
             $hashmotdepasse = password_hash($motdepasse, PASSWORD_ARGON2I);
             $passwordCheck = true;
+            
         }else{
             echo 'Le mot de passe de confirmation est différent du mot de passe.';
             header('refresh:3;url=register');
@@ -81,8 +82,8 @@ class LoginController extends MainController
             header('refresh:3;url=register');
         }
 
-        if ((!empty($passwordCheck) && $passwordCheck == true) && (!empty($emailCheck) && $emailCheck == false) && (!empty($idCheck) && $idCheck == false)){
-            $add = $this->UserManager->addUser($nom, $prenom, $identifiant, $email, $hashmotdepasse);
+        if ((!empty($passwordCheck) && $passwordCheck == true) && empty($emailCheck) && empty($idCheck)){
+            $add = $this->UserModel->addUser($nom, $prenom, $identifiant, $email, $hashmotdepasse);
             header('Location: login');
         }
 
