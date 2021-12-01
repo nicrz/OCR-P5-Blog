@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        {% block head %}
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="Projet 5 OCR - Blog Nicolas RUIZ" />
         <meta name="author" content="Nicolas RUIZ" />
-        <title>Projet 5 OCR - Blog Nicolas RUIZ</title>
+        <title>{% block title %}{% endblock %}Projet 5 OCR - Blog Nicolas RUIZ</title>
         <link rel="icon" type="image/x-icon" href="./../public/assets/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
@@ -14,7 +15,35 @@
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="http://localhost/OCR-P5-Blog/public/css/styles.css" rel="stylesheet" />
+        {% endblock %}
     </head>
     <body>
+    {% block content %}{% endblock %}
         <!-- Navigation-->
-{% include 'nav.html.twig' %}
+        <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="index.html">Blog de Nicolas Ruiz</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="http://localhost/OCR-P5-Blog">Accueil</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="http://localhost/OCR-P5-Blog/blog">Blog</a></li>
+                        {% if session.id is empty %}
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="http://localhost/OCR-P5-Blog/login">Connexion</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="http://localhost/OCR-P5-Blog/register">Inscription</a></li>
+                        {% endif %}
+                        {% if session.id is not empty and session.type == 2 %}
+                        
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="http://localhost/OCR-P5-Blog/users_list">Administration</a></li>
+                        {% endif %}
+                        {% if session.id is not empty %}
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="http://localhost/OCR-P5-Blog/logout">Déconnexion (<i>connecté en tant que {{ session.nom }} {{ session.prenom }}</i>)</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>

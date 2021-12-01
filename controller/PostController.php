@@ -141,7 +141,7 @@ class PostController extends MainController
         $add = $this->CommentModel->updateCommentStatus(1, $request['id']);
         }
    
-        header('Location: /OCR-P5-Blog');       
+        header('Location: /OCR-P5-Blog/blog');       
 
     }
 
@@ -152,7 +152,7 @@ class PostController extends MainController
         $add = $this->CommentModel->deleteComment($request['id']);
         }
    
-        header('Location: /OCR-P5-Blog');       
+        header('Location: /OCR-P5-Blog/blog');       
 
     }
 
