@@ -42,13 +42,13 @@ class HomeController extends MainController
             //Content
             $phpmailer->isHTML(true);                                  //Set email format to HTML
             $phpmailer->Subject = 'Mail de contact blog';
-            $phpmailer->Body    = $_POST['message'];
+            $phpmailer->Body    = filter_input(INPUT_POST, 'message');
         
             $phpmailer->send();
-            echo 'Message has been sent';
+            print_r('Message has been sent');
             header('Location: home');
         } catch (Exception $e) {
-            echo "Message could not be sent. Mailer Error: {$phpmailer->ErrorInfo}";
+            print_r("Message could not be sent. Mailer Error: {$phpmailer->ErrorInfo}");
             header('refresh:3;url=home');
         }
     

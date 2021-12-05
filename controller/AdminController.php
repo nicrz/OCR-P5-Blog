@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Model\UserModel;
+use App\Engine\SessionObject;
+use App\Engine\ServerObject;
 
 
 class AdminController extends MainController
@@ -20,7 +22,11 @@ class AdminController extends MainController
 
     public function usersList()
     {
-        if ($_SESSION['type'] == 2){
+
+        $session = new SessionObject();
+
+
+        if ($session->vars['type'] == 2){
             $users = $this->UserModel->getUsers();
             $this->twig->display('users_list.html.twig', ['users' => $users]);
         }else{
@@ -31,7 +37,9 @@ class AdminController extends MainController
 
     public function userEdit($request)
     {
-        if ($_SESSION['type'] == 2){
+
+        $session = new SessionObject();
+        if ($session->vars['type'] == 2){
             $user = $this->UserModel->getUserById($request['id']);
             $this->twig->display('user_edit.html.twig', ['user' => $user]);
         }else{
@@ -43,18 +51,21 @@ class AdminController extends MainController
     public function userEditConfirm()
     {
 
-        if ($_SESSION['type'] == 2){
-        $userid = $_POST['userid'];  
-        $nom = $_POST['nom'];
-        $prenom = $_POST['prenom'];
-        $identifiant = $_POST['identifiant'];   
-        $email = $_POST['email'];  
-        $actif = $_POST['actif'];    
-        $type = $_POST['type'];    
+        $session = new SessionObject();
+        $server = new ServerObject();
+
+        if ($session->vars['type'] == 2){
+        $userid = filter_input(INPUT_POST, 'userid');  
+        $nom = filter_input(INPUT_POST, 'nom');
+        $prenom = filter_input(INPUT_POST, 'prenom');
+        $identifiant = filter_input(INPUT_POST, 'identifiant');   
+        $email = filter_input(INPUT_POST, 'email');  
+        $actif = filter_input(INPUT_POST, 'actif');    
+        $type = filter_input(INPUT_POST, 'type');    
         $edit = $this->UserModel->editUser($userid, $nom, $prenom, $identifiant, $email, $actif, $type);
         }
    
-        header('Location: ' . $_SERVER['HTTP_REFERER']);         
+        header('Location: ' . $server->vars['HTTP_REFERER']);         
 
     }
 

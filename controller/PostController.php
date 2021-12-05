@@ -6,6 +6,8 @@ use App\Model\PostModel;
 use App\Model\CommentModel;
 use App\Model\UserModel;
 use App\Engine\Session;
+use App\Engine\SessionObject;
+use App\Engine\ServerObject;
 
 
 class PostController extends MainController
@@ -37,9 +39,11 @@ class PostController extends MainController
         $comments = $this->CommentModel->getCommentsFromPost($request['id']);
         $pendingcomments = $this->CommentModel->getPendingCommentsFromPost($request['id']);
 
-        if (!empty($_SESSION['id'])){
+        $session = new SessionObject();
 
-            $awaitingcomment = $this->CommentModel->checkIfCommentAwaiting($request['id'], $_SESSION['id']);
+        if (!empty($session->vars['id'])){
+
+            $awaitingcomment = $this->CommentModel->checkIfCommentAwaiting($request['id'], $session->vars['id']);
     
             $this->twig->display('post.html.twig', ['post' => $post, 'comments' => $comments, 'pendingcomments' => $pendingcomments, 'awaitingcomment' => $awaitingcomment]);
 
@@ -54,7 +58,9 @@ class PostController extends MainController
     public function addPost()
     {
 
-        if ($_SESSION['type'] == 2){
+        $session = new SessionObject();
+
+        if ($session->vars['type'] == 2){
             $this->twig->display('post_add.html.twig');
         }else{
             header('Location: /OCR-P5-Blog');
@@ -65,11 +71,13 @@ class PostController extends MainController
     public function addPostConfirm()
     {
 
-        if ($_SESSION['type'] == 2){
-        $title = $_POST['titre'];
-        $chapo = $_POST['chapo'];
-        $content = $_POST['contenu'];      
-        $add = $this->PostModel->addPost($title, $chapo, $content, $_SESSION['id']);
+        $session = new SessionObject();
+
+        if ($session->vars['type'] == 2){
+        $title = filter_input(INPUT_POST, 'titre');
+        $chapo = filter_input(INPUT_POST, 'chapo');
+        $content = filter_input(INPUT_POST, 'contenu');      
+        $add = $this->PostModel->addPost($title, $chapo, $content, $session->vars['id']);
         }
    
         header('Location: blog');         
@@ -79,7 +87,9 @@ class PostController extends MainController
     public function editPost($request)
     {
 
-        if ($_SESSION['type'] == 2){
+        $session = new SessionObject();
+
+        if ($session->vars['type'] == 2){
         $post = $this->PostModel->getById($request['id']);
         $users = $this->UserModel->getUsers();
 
@@ -93,23 +103,28 @@ class PostController extends MainController
     public function editPostConfirm()
     {
 
-        if ($_SESSION['type'] == 2){
-        $postid = $_POST['postid'];  
-        $title = $_POST['titre'];
-        $chapo = $_POST['chapo'];
-        $content = $_POST['contenu'];   
-        $author = $_POST['auteur'];      
+        $session = new SessionObject();
+        $server = new ServerObject();
+
+        if ($session->vars['type'] == 2){
+        $postid = filter_input(INPUT_POST, 'postid');  
+        $title = filter_input(INPUT_POST, 'titre');
+        $chapo = filter_input(INPUT_POST, 'chapo');
+        $content = filter_input(INPUT_POST, 'contenu');   
+        $author = filter_input(INPUT_POST, 'auteur');      
         $add = $this->PostModel->editPost($postid, $title, $chapo, $content, $author);
         }
    
-        header('Location: ' . $_SERVER['HTTP_REFERER']);         
+        header('Location: ' . $server->vars['HTTP_REFERER']);         
 
     }
 
     public function removePost($request)
     {
 
-        if ($_SESSION['type'] == 2){
+        $session = new SessionObject();
+
+        if ($session->vars['type'] == 2){
         $add = $this->PostModel->deletePost($request['id']);
         }
    
@@ -119,17 +134,20 @@ class PostController extends MainController
 
     public function addComment()
     {
-        $postId = $_POST['postid'];
-        $userId = $_POST['userid'];
-        $comment = $_POST['commentaire'];
+
+        $server = new ServerObject();
+        
+        $postId = filter_input(INPUT_POST, 'postid');
+        $userId = filter_input(INPUT_POST, 'userid');
+        $comment = filter_input(INPUT_POST, 'commentaire');
 
         $add = $this->CommentModel->addComment($comment, $postId, $userId);
 
         if ($add == true){        
-            header('Location: ' . $_SERVER['HTTP_REFERER']);         
+            header('Location: ' . $server->vars['HTTP_REFERER']);         
         }else{
-            echo 'Erreur. Redirection dans 3 secondes...';
-            header('refresh:3;url=' . $_SERVER['HTTP_REFERER']);
+            print_r('Erreur. Redirection dans 3 secondes...');
+            header('refresh:3;url=' . $server->vars['HTTP_REFERER']);
         }
 
     }
@@ -137,7 +155,9 @@ class PostController extends MainController
     public function validateComment($request)
     {
 
-        if ($_SESSION['type'] == 2){
+        $session = new SessionObject();
+
+        if ($session->vars['type'] == 2){
         $add = $this->CommentModel->updateCommentStatus(1, $request['id']);
         }
    
@@ -148,7 +168,9 @@ class PostController extends MainController
     public function removeComment($request)
     {
 
-        if ($_SESSION['type'] == 2){
+        $session = new SessionObject();
+
+        if ($session->vars['type'] == 2){
         $add = $this->CommentModel->deleteComment($request['id']);
         }
    
