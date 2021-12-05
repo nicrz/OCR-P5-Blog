@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Model\UserModel;
 use App\Engine\Session;
+use App\Engine\SessionObject;
 
 
 class LoginController extends MainController
@@ -26,8 +27,8 @@ class LoginController extends MainController
 
     public function checkLogin()
     {
-        $emailSended = $_POST['email'];
-        $passwordSended = $_POST['pwd'];
+        $emailSended = filter_input(INPUT_POST, 'email');
+        $passwordSended = filter_input(INPUT_POST, 'pwd');
 
         $userChecked = $this->UserModel->login($emailSended, $passwordSended);
 
@@ -38,7 +39,7 @@ class LoginController extends MainController
                 header('Location: blog');
             }
         }else{
-            echo 'Identifiant ou mot de passe incorrect. Redirection vers la page de connexion...';
+            print_r('Identifiant ou mot de passe incorrect. Redirection vers la page de connexion...');
             header('refresh:3;url=login');
         }
 
@@ -53,12 +54,12 @@ class LoginController extends MainController
 
     public function checkRegister()
     {
-        $nom = $_POST['nom'];
-        $prenom = $_POST['prenom'];
-        $identifiant = $_POST['identifiant'];
-        $email = $_POST['email'];
-        $motdepasse = $_POST['motdepasse'];
-        $motdepasseconf = $_POST['motdepasseconf'];
+        $nom = filter_input(INPUT_POST, 'nom');
+        $prenom = filter_input(INPUT_POST, 'prenom');
+        $identifiant = filter_input(INPUT_POST, 'identifiant');
+        $email = filter_input(INPUT_POST, 'email');
+        $motdepasse = filter_input(INPUT_POST, 'motdepasse');
+        $motdepasseconf = filter_input(INPUT_POST, 'motdepasseconf');
 
         $emailCheck = $this->UserModel->checkEmailExistence($email);
         $idCheck = $this->UserModel->checkIdExistence($identifiant);
@@ -68,17 +69,17 @@ class LoginController extends MainController
             $passwordCheck = true;
             
         }else{
-            echo 'Le mot de passe de confirmation est différent du mot de passe.';
+            print_r('Le mot de passe de confirmation est différent du mot de passe.');
             header('refresh:3;url=register');
         }
 
         if ($emailCheck == true){
-            echo 'Cet e-mail est déjà utilisé.';
+            print_r('Cet e-mail est déjà utilisé.');
             header('refresh:3;url=register');
         }
 
         if ($idCheck == true){
-            echo 'Cet identifiant est déjà utilisé.';
+            print_r('Cet identifiant est déjà utilisé.');
             header('refresh:3;url=register');
         }
 
