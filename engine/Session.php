@@ -2,6 +2,8 @@
 
 namespace App\Engine;
 
+use App\Engine\SessionObject;
+
 class Session
 {
 
@@ -12,13 +14,20 @@ class Session
 
     public static function set($key, $val)
     {
-        $_SESSION[$key] = $val;
+
+        $session = new SessionObject();
+
+        $session->vars[$key] = $val;
     }
 
     public function get($key)
     {
-        if (isset($_SESSION[$key])) {
-            return $_SESSION[$key];
+
+        $session = new SessionObject();
+
+
+        if (isset($session->vars[$key])) {
+            return $session->vars[$key];
         }
     }
 

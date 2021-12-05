@@ -36,7 +36,7 @@ class HomeController extends MainController
             $phpmailer->Password = 'ef6c4351cfe845';                                 
         
             //Recipients
-            $phpmailer->setFrom($_POST['email'], $_POST['nom'] . $_POST['prenom']);
+            $phpmailer->setFrom(filter_input(INPUT_POST, 'email'), filter_input(INPUT_POST, 'nom') . filter_input(INPUT_POST, 'prenom'));
             $phpmailer->addAddress('ruiz.nico64@gmail.com', 'Nicolas Ruiz');     //Add a recipient
         
             //Content
