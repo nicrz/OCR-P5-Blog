@@ -85,7 +85,7 @@ class PostController extends MainController
         $title = filter_input(INPUT_POST, 'titre');
         $chapo = filter_input(INPUT_POST, 'chapo');
         $content = filter_input(INPUT_POST, 'contenu');      
-        $add = $this->PostModel->addPost($title, $chapo, $content, $session->vars['id']);
+        $this->PostModel->addPost($title, $chapo, $content, $session->vars['id']);
         }
    
         header('Location: blog');         
@@ -124,7 +124,7 @@ class PostController extends MainController
         $chapo = filter_input(INPUT_POST, 'chapo');
         $content = filter_input(INPUT_POST, 'contenu');   
         $author = filter_input(INPUT_POST, 'auteur');      
-        $add = $this->PostModel->editPost($postid, $title, $chapo, $content, $author);
+        $this->PostModel->editPost($postid, $title, $chapo, $content, $author);
         }
    
         header('Location: ' . $server->vars['HTTP_REFERER']);         
@@ -139,62 +139,10 @@ class PostController extends MainController
         $session = new SessionObject();
 
         if ($session->vars['type'] == 2){
-        $add = $this->PostModel->deletePost($request['id']);
+        $this->PostModel->deletePost($request['id']);
         }
    
         header('Location: /OCR-P5-Blog');       
-
-    }
-
-    // Confirme la modification du post
-
-    public function addComment()
-    {
-
-        $server = new ServerObject();
-        
-        $postId = filter_input(INPUT_POST, 'postid');
-        $userId = filter_input(INPUT_POST, 'userid');
-        $comment = filter_input(INPUT_POST, 'commentaire');
-
-        $add = $this->CommentModel->addComment($comment, $postId, $userId);
-
-        if ($add == true){        
-            header('Location: ' . $server->vars['HTTP_REFERER']);         
-        }else{
-            print_r('Erreur. Redirection dans 3 secondes...');
-            header('refresh:3;url=' . $server->vars['HTTP_REFERER']);
-        }
-
-    }
-
-    // Confirme la validation d'un commentaire
-
-    public function validateComment($request)
-    {
-
-        $session = new SessionObject();
-
-        if ($session->vars['type'] == 2){
-        $add = $this->CommentModel->updateCommentStatus(1, $request['id']);
-        }
-   
-        header('Location: /OCR-P5-Blog/blog');       
-
-    }
-
-    // Supprime un commentaire
-
-    public function removeComment($request)
-    {
-
-        $session = new SessionObject();
-
-        if ($session->vars['type'] == 2){
-        $add = $this->CommentModel->deleteComment($request['id']);
-        }
-   
-        header('Location: /OCR-P5-Blog/blog');       
 
     }
 

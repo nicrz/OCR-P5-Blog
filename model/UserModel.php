@@ -21,10 +21,10 @@ class UserModel
         return $oStmt->fetchAll(\PDO::FETCH_OBJ);
     }
 
-    public function getUserById($id)
+    public function getUserById($userid)
     {
         $oStmt = $this->oDb->prepare('SELECT * FROM utilisateur WHERE id = :userId');
-        $oStmt->bindParam(':userId', $id, \PDO::PARAM_INT);
+        $oStmt->bindParam(':userId', $userid, \PDO::PARAM_INT);
         $oStmt->execute();
         return $oStmt->fetch(\PDO::FETCH_OBJ);
     }

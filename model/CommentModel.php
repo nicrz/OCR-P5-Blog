@@ -22,26 +22,26 @@ class CommentModel
         return $oStmt->fetchAll(\PDO::FETCH_OBJ);
     }
 
-    public function getCommentsFromPost($id)
+    public function getCommentsFromPost($postid)
     {
         $oStmt = $this->oDb->prepare('SELECT commentaire.id, contenu, date, valide, utilisateur.nom, utilisateur.prenom
         FROM commentaire
         INNER JOIN utilisateur on commentaire.idUtilisateur = utilisateur.id
         WHERE idArticle = :postId and valide = 1
         ORDER BY date DESC');
-        $oStmt->bindParam(':postId', $id, \PDO::PARAM_INT);
+        $oStmt->bindParam(':postId', $postid, \PDO::PARAM_INT);
         $oStmt->execute();
         return $oStmt->fetchAll(\PDO::FETCH_OBJ);
     }
 
-    public function getPendingCommentsFromPost($id)
+    public function getPendingCommentsFromPost($postid)
     {
         $oStmt = $this->oDb->prepare('SELECT commentaire.id, contenu, date, valide, utilisateur.nom, utilisateur.prenom
         FROM commentaire
         INNER JOIN utilisateur on commentaire.idUtilisateur = utilisateur.id
         WHERE idArticle = :postId and valide = 0
         ORDER BY date DESC');
-        $oStmt->bindParam(':postId', $id, \PDO::PARAM_INT);
+        $oStmt->bindParam(':postId', $postid, \PDO::PARAM_INT);
         $oStmt->execute();
         return $oStmt->fetchAll(\PDO::FETCH_OBJ);
     }

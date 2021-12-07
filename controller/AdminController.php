@@ -68,7 +68,7 @@ class AdminController extends MainController
         $email = filter_input(INPUT_POST, 'email');  
         $actif = filter_input(INPUT_POST, 'actif');    
         $type = filter_input(INPUT_POST, 'type');    
-        $edit = $this->UserModel->editUser($userid, $nom, $prenom, $identifiant, $email, $actif, $type);
+        $this->UserModel->editUser($userid, $nom, $prenom, $identifiant, $email, $actif, $type);
         }
    
         header('Location: ' . $server->vars['HTTP_REFERER']);         

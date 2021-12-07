@@ -23,13 +23,13 @@ class PostModel
         return $oStmt->fetchAll(\PDO::FETCH_OBJ);
     }
 
-    public function getById($id)
+    public function getById($postid)
     {
         $oStmt = $this->oDb->prepare('SELECT article.id, titre, chapo, contenu, maj, idAuteur, utilisateur.nom, utilisateur.prenom
          FROM article
          INNER JOIN utilisateur ON article.idAuteur = utilisateur.id 
          WHERE article.id = :postId');
-        $oStmt->bindParam(':postId', $id, \PDO::PARAM_INT);
+        $oStmt->bindParam(':postId', $postid, \PDO::PARAM_INT);
         $oStmt->execute();
         return $oStmt->fetch(\PDO::FETCH_OBJ);
     }

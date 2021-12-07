@@ -92,7 +92,7 @@ class LoginController extends MainController
         }
 
         if ((!empty($passwordCheck) && $passwordCheck == true) && empty($emailCheck) && empty($idCheck)){
-            $add = $this->UserModel->addUser($nom, $prenom, $identifiant, $email, $hashmotdepasse);
+            $this->UserModel->addUser($nom, $prenom, $identifiant, $email, $hashmotdepasse);
             header('Location: login');
         }
 

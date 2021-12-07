@@ -5,6 +5,7 @@ use App\Controller\HomeController as HomeController;
 use App\Controller\PostController as PostController;
 use App\Controller\LoginController as LoginController;
 use App\Controller\AdminController as AdminController;
+use App\Controller\CommentController as CommentController;
 
 
 
@@ -13,6 +14,7 @@ $HomeController = new HomeController();
 $PostController = new PostController();
 $LoginController = new LoginController();
 $AdminController = new AdminController();
+$CommentController = new CommentController();
 
 $router->setBasePath('/OCR-P5-Blog');
 $router->map('GET','/', [$HomeController, "home"]);
@@ -25,9 +27,9 @@ $router->map('GET','/register', [$LoginController, "registerPage"]);
 $router->map('POST','/authenticate', [$LoginController, "checkLogin"]);
 $router->map('POST','/register_confirm', [$LoginController, "checkRegister"]);
 $router->map('GET','/logout', [$LoginController, "logout"]);
-$router->map('POST','/addcomment', [$PostController, "addComment"]);
-$router->map('GET','/comment_validation/[i:id]', [$PostController, "validateComment"]);
-$router->map('GET','/comment_delete/[i:id]', [$PostController, "removeComment"]);
+$router->map('POST','/addcomment', [$CommentController, "addComment"]);
+$router->map('GET','/comment_validation/[i:id]', [$CommentController, "validateComment"]);
+$router->map('GET','/comment_delete/[i:id]', [$CommentController, "removeComment"]);
 $router->map('GET','/post_edit/[i:id]', [$PostController, "editPost"]);
 $router->map('POST','/post_edit_confirm', [$PostController, "editPostConfirm"]);
 $router->map('GET','/post_add', [$PostController, "addPost"]);
