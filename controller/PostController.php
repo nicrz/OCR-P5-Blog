@@ -25,12 +25,16 @@ class PostController extends MainController
 
     }
 
+    // Retourne la liste de tous les posts
+
     public function postsList()
     {
         $posts = $this->PostModel->getPosts();
 
         $this->twig->display('listPostsView.html.twig', ['posts' => $posts]);
     }
+
+    // Affiche les détails d'un post
 
     public function post($request)
     {
@@ -55,6 +59,8 @@ class PostController extends MainController
 
     }
 
+    // Retourne le formulaire d'ajout d'un post si l'utilisateur dispose du rôle ADMIN
+
     public function addPost()
     {
 
@@ -67,6 +73,8 @@ class PostController extends MainController
         }
         
     }
+
+    // Confirme l'ajout d'un post
 
     public function addPostConfirm()
     {
@@ -84,6 +92,8 @@ class PostController extends MainController
 
     }
 
+    // Retourne le formulaire de modification d'un post si l'utilisateur dispose du rôle ADMIN
+
     public function editPost($request)
     {
 
@@ -99,6 +109,8 @@ class PostController extends MainController
             header('Location: /OCR-P5-Blog');
         }
     }
+
+    // Confirme la modification du post
 
     public function editPostConfirm()
     {
@@ -119,6 +131,8 @@ class PostController extends MainController
 
     }
 
+    // Supprime un post
+
     public function removePost($request)
     {
 
@@ -131,6 +145,8 @@ class PostController extends MainController
         header('Location: /OCR-P5-Blog');       
 
     }
+
+    // Confirme la modification du post
 
     public function addComment()
     {
@@ -152,6 +168,8 @@ class PostController extends MainController
 
     }
 
+    // Confirme la validation d'un commentaire
+
     public function validateComment($request)
     {
 
@@ -164,6 +182,8 @@ class PostController extends MainController
         header('Location: /OCR-P5-Blog/blog');       
 
     }
+
+    // Supprime un commentaire
 
     public function removeComment($request)
     {

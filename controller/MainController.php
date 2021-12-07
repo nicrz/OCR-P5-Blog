@@ -12,6 +12,9 @@ class MainController{
 
     protected $twig;
 
+    // Récupère l'environnement de templating TWIG et ajoute la variable $_SESSION en tant que variable globale
+    // pour pouvoir l'utiliser dans chaque template TWIG
+
     public function __construct(){
 
             $loader = new FilesystemLoader('view');
