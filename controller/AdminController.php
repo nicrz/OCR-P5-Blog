@@ -20,6 +20,8 @@ class AdminController extends MainController
 
     }
 
+    // Retourne la liste de tous les utilisateurs présents dans la base de données
+
     public function usersList()
     {
 
@@ -35,6 +37,8 @@ class AdminController extends MainController
 
     }
 
+    // Charge un formulaire avec les infos d'un utilisateur
+
     public function userEdit($request)
     {
 
@@ -47,6 +51,8 @@ class AdminController extends MainController
         }
 
     }
+
+    // Execute les modifications apportées à un utilisateur
 
     public function userEditConfirm()
     {
@@ -62,7 +68,7 @@ class AdminController extends MainController
         $email = filter_input(INPUT_POST, 'email');  
         $actif = filter_input(INPUT_POST, 'actif');    
         $type = filter_input(INPUT_POST, 'type');    
-        $edit = $this->UserModel->editUser($userid, $nom, $prenom, $identifiant, $email, $actif, $type);
+        $this->UserModel->editUser($userid, $nom, $prenom, $identifiant, $email, $actif, $type);
         }
    
         header('Location: ' . $server->vars['HTTP_REFERER']);         

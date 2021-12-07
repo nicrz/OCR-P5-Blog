@@ -19,11 +19,15 @@ class LoginController extends MainController
 
     }
 
+    // Affiche la page d'identification
+
     public function loginPage()
     {
 
         $this->twig->display('login.html.twig');
     }
+
+    // Vérifie si les identifiants rentrés sont bons pour permettre à l'utilisateur de lancer une session
 
     public function checkLogin()
     {
@@ -46,11 +50,15 @@ class LoginController extends MainController
 
     }
 
+    // Affiche la page d'inscription
+
     public function registerPage()
     {
 
         $this->twig->display('register.html.twig');
     }
+
+    // Execute l'enregistrement d'un utilisateur avec les informations entrées
 
     public function checkRegister()
     {
@@ -84,12 +92,14 @@ class LoginController extends MainController
         }
 
         if ((!empty($passwordCheck) && $passwordCheck == true) && empty($emailCheck) && empty($idCheck)){
-            $add = $this->UserModel->addUser($nom, $prenom, $identifiant, $email, $hashmotdepasse);
+            $this->UserModel->addUser($nom, $prenom, $identifiant, $email, $hashmotdepasse);
             header('Location: login');
         }
 
 
     }
+
+    // Déconnecte un utilisateur et redirige vers la page d'accueil
 
     public function logout()
     {

@@ -25,12 +25,16 @@ class PostController extends MainController
 
     }
 
+    // Retourne la liste de tous les posts
+
     public function postsList()
     {
         $posts = $this->PostModel->getPosts();
 
         $this->twig->display('listPostsView.html.twig', ['posts' => $posts]);
     }
+
+    // Affiche les détails d'un post
 
     public function post($request)
     {
@@ -55,6 +59,8 @@ class PostController extends MainController
 
     }
 
+    // Retourne le formulaire d'ajout d'un post si l'utilisateur dispose du rôle ADMIN
+
     public function addPost()
     {
 
@@ -68,6 +74,8 @@ class PostController extends MainController
         
     }
 
+    // Confirme l'ajout d'un post
+
     public function addPostConfirm()
     {
 
@@ -77,12 +85,14 @@ class PostController extends MainController
         $title = filter_input(INPUT_POST, 'titre');
         $chapo = filter_input(INPUT_POST, 'chapo');
         $content = filter_input(INPUT_POST, 'contenu');      
-        $add = $this->PostModel->addPost($title, $chapo, $content, $session->vars['id']);
+        $this->PostModel->addPost($title, $chapo, $content, $session->vars['id']);
         }
    
         header('Location: blog');         
 
     }
+
+    // Retourne le formulaire de modification d'un post si l'utilisateur dispose du rôle ADMIN
 
     public function editPost($request)
     {
@@ -100,6 +110,8 @@ class PostController extends MainController
         }
     }
 
+    // Confirme la modification du post
+
     public function editPostConfirm()
     {
 
@@ -112,12 +124,14 @@ class PostController extends MainController
         $chapo = filter_input(INPUT_POST, 'chapo');
         $content = filter_input(INPUT_POST, 'contenu');   
         $author = filter_input(INPUT_POST, 'auteur');      
-        $add = $this->PostModel->editPost($postid, $title, $chapo, $content, $author);
+        $this->PostModel->editPost($postid, $title, $chapo, $content, $author);
         }
    
         header('Location: ' . $server->vars['HTTP_REFERER']);         
 
     }
+
+    // Supprime un post
 
     public function removePost($request)
     {
@@ -125,56 +139,10 @@ class PostController extends MainController
         $session = new SessionObject();
 
         if ($session->vars['type'] == 2){
-        $add = $this->PostModel->deletePost($request['id']);
+        $this->PostModel->deletePost($request['id']);
         }
    
         header('Location: /OCR-P5-Blog');       
-
-    }
-
-    public function addComment()
-    {
-
-        $server = new ServerObject();
-        
-        $postId = filter_input(INPUT_POST, 'postid');
-        $userId = filter_input(INPUT_POST, 'userid');
-        $comment = filter_input(INPUT_POST, 'commentaire');
-
-        $add = $this->CommentModel->addComment($comment, $postId, $userId);
-
-        if ($add == true){        
-            header('Location: ' . $server->vars['HTTP_REFERER']);         
-        }else{
-            print_r('Erreur. Redirection dans 3 secondes...');
-            header('refresh:3;url=' . $server->vars['HTTP_REFERER']);
-        }
-
-    }
-
-    public function validateComment($request)
-    {
-
-        $session = new SessionObject();
-
-        if ($session->vars['type'] == 2){
-        $add = $this->CommentModel->updateCommentStatus(1, $request['id']);
-        }
-   
-        header('Location: /OCR-P5-Blog/blog');       
-
-    }
-
-    public function removeComment($request)
-    {
-
-        $session = new SessionObject();
-
-        if ($session->vars['type'] == 2){
-        $add = $this->CommentModel->deleteComment($request['id']);
-        }
-   
-        header('Location: /OCR-P5-Blog/blog');       
 
     }
 
