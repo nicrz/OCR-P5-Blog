@@ -5,17 +5,20 @@ namespace App\Controller;
 use App\Model\UserModel;
 use App\Engine\Session;
 use App\Engine\SessionObject;
+use App\Engine\Header;
 
 
 class LoginController extends MainController
 {
     private $UserModel;
+    private $Header;
 
     public function __construct()
     {
         parent::__construct();
 
         $this->UserModel = new UserModel();
+        $this->Header = new Header();
 
     }
 
@@ -40,11 +43,11 @@ class LoginController extends MainController
             foreach ($userChecked as $key => $value){
                 //session_start();
                 Session::set($key, $value);
-                header('Location: blog');
+                $this->Header->set('Location: blog');
             }
         }else{
             print_r('Identifiant ou mot de passe incorrect. Redirection vers la page de connexion...');
-            header('refresh:3;url=login');
+            $this->Header->set('refresh:3;url=login');
         }
 
 
@@ -78,22 +81,22 @@ class LoginController extends MainController
             
         }else{
             print_r('Le mot de passe de confirmation est différent du mot de passe.');
-            header('refresh:3;url=register');
+            $this->Header->set('refresh:3;url=register');
         }
 
         if ($emailCheck == true){
             print_r('Cet e-mail est déjà utilisé.');
-            header('refresh:3;url=register');
+            $this->Header->set('refresh:3;url=register');
         }
 
         if ($idCheck == true){
             print_r('Cet identifiant est déjà utilisé.');
-            header('refresh:3;url=register');
+            $this->Header->set('refresh:3;url=register');
         }
 
         if ((!empty($passwordCheck) && $passwordCheck == true) && empty($emailCheck) && empty($idCheck)){
             $this->UserModel->addUser($nom, $prenom, $identifiant, $email, $hashmotdepasse);
-            header('Location: login');
+            $this->Header->set('Location: login');
         }
 
 
@@ -105,7 +108,7 @@ class LoginController extends MainController
     {
 
         session_destroy();
-        header('Location: home');
+        $this->Header->set('Location: home');
 
     }
 

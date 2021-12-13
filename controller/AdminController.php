@@ -5,18 +5,21 @@ namespace App\Controller;
 use App\Model\UserModel;
 use App\Engine\SessionObject;
 use App\Engine\ServerObject;
+use App\Engine\Header;
 
 
 class AdminController extends MainController
 {
 
     private $UserModel;
+    private $Header;
 
     public function __construct()
     {
         parent::__construct();
 
         $this->UserModel = new UserModel();
+        $this->Header = new Header();
 
     }
 
@@ -32,7 +35,7 @@ class AdminController extends MainController
             $users = $this->UserModel->getUsers();
             $this->twig->display('users_list.html.twig', ['users' => $users]);
         }else{
-            header('Location: /OCR-P5-Blog');
+            $this->Header->set('Location: /OCR-P5-Blog');     
         }
 
     }
@@ -47,7 +50,7 @@ class AdminController extends MainController
             $user = $this->UserModel->getUserById($request['id']);
             $this->twig->display('user_edit.html.twig', ['user' => $user]);
         }else{
-            header('Location: /OCR-P5-Blog');
+            $this->Header->set('Location: /OCR-P5-Blog');
         }
 
     }
@@ -71,8 +74,7 @@ class AdminController extends MainController
         $this->UserModel->editUser($userid, $nom, $prenom, $identifiant, $email, $actif, $type);
         }
    
-        header('Location: ' . $server->vars['HTTP_REFERER']);         
-
+        $this->Header->set('Location: ' . $server->vars['HTTP_REFERER']);  
     }
 
 

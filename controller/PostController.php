@@ -6,6 +6,7 @@ use App\Model\PostModel;
 use App\Model\CommentModel;
 use App\Model\UserModel;
 use App\Engine\Session;
+use App\Engine\Header;
 use App\Engine\SessionObject;
 use App\Engine\ServerObject;
 
@@ -14,6 +15,7 @@ class PostController extends MainController
 {
     private $PostModel;
     private $CommentModel;
+    private $Header;
 
     public function __construct()
     {
@@ -22,6 +24,7 @@ class PostController extends MainController
         $this->PostModel = new PostModel();
         $this->CommentModel = new CommentModel();
         $this->UserModel = new UserModel();
+        $this->Header = new Header();
 
     }
 
@@ -69,7 +72,7 @@ class PostController extends MainController
         if ($session->vars['type'] == 2){
             $this->twig->display('post_add.html.twig');
         }else{
-            header('Location: /OCR-P5-Blog');
+            $this->Header->set('Location: /OCR-P5-Blog');
         }
         
     }
@@ -88,7 +91,7 @@ class PostController extends MainController
         $this->PostModel->addPost($title, $chapo, $content, $session->vars['id']);
         }
    
-        header('Location: blog');         
+        $this->Header->set('Location: blog');       
 
     }
 
@@ -106,7 +109,7 @@ class PostController extends MainController
         $this->twig->display('post_edit.html.twig', ['post' => $post, 'users' => $users]);
 
         }else{
-            header('Location: /OCR-P5-Blog');
+            $this->Header->set('Location: /OCR-P5-Blog');
         }
     }
 
@@ -127,7 +130,7 @@ class PostController extends MainController
         $this->PostModel->editPost($postid, $title, $chapo, $content, $author);
         }
    
-        header('Location: ' . $server->vars['HTTP_REFERER']);         
+        $this->Header->set('Location: ' . $server->vars['HTTP_REFERER']);   
 
     }
 
@@ -142,7 +145,7 @@ class PostController extends MainController
         $this->PostModel->deletePost($request['id']);
         }
    
-        header('Location: /OCR-P5-Blog');       
+        $this->Header->set('Location: /OCR-P5-Blog');
 
     }
 

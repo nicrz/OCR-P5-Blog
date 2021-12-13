@@ -5,14 +5,19 @@ namespace App\Controller;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
+use App\Engine\Header;
 
 
 class HomeController extends MainController
 {
 
+    private $Header;
+
     public function __construct()
     {
         parent::__construct();
+
+        $this->Header = new Header();
 
     }
 
@@ -46,10 +51,10 @@ class HomeController extends MainController
         
             $phpmailer->send();
             print_r('Message has been sent');
-            header('Location: home');
+            $this->Header->set('Location: home');
         } catch (Exception $e) {
             print_r("Message could not be sent. Mailer Error: {$phpmailer->ErrorInfo}");
-            header('refresh:3;url=home');
+            $this->Header->set('refresh:3;url=home');
         }
     
 
