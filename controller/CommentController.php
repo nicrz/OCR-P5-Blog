@@ -8,12 +8,14 @@ use App\Model\UserModel;
 use App\Engine\Session;
 use App\Engine\SessionObject;
 use App\Engine\ServerObject;
+use App\Engine\Header;
 
 
 class CommentController extends MainController
 {
     private $PostModel;
     private $CommentModel;
+    private $Header;
 
     public function __construct()
     {
@@ -22,6 +24,7 @@ class CommentController extends MainController
         $this->PostModel = new PostModel();
         $this->CommentModel = new CommentModel();
         $this->UserModel = new UserModel();
+        $this->Header = new Header();
 
     }
 
@@ -39,10 +42,10 @@ class CommentController extends MainController
         $add = $this->CommentModel->addComment($comment, $postId, $userId);
 
         if ($add == true){        
-            header('Location: ' . $server->vars['HTTP_REFERER']);         
+            $this->Header->set('Location: ' . $server->vars['HTTP_REFERER']);         
         }else{
             print_r('Erreur. Redirection dans 3 secondes...');
-            header('refresh:3;url=' . $server->vars['HTTP_REFERER']);
+            $this->Header->set('refresh:3;url=' . $server->vars['HTTP_REFERER']);   
         }
 
     }
@@ -58,7 +61,7 @@ class CommentController extends MainController
         $this->CommentModel->updateCommentStatus(1, $request['id']);
         }
    
-        header('Location: /OCR-P5-Blog/blog');       
+        $this->Header->set('Location: blog');     
 
     }
 
@@ -73,7 +76,7 @@ class CommentController extends MainController
         $this->CommentModel->deleteComment($request['id']);
         }
    
-        header('Location: /OCR-P5-Blog/blog');       
+        $this->Header->set('Location: blog');     
 
     }
 
