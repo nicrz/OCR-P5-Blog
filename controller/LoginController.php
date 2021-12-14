@@ -6,6 +6,7 @@ use App\Model\UserModel;
 use App\Engine\Session;
 use App\Engine\SessionObject;
 use App\Engine\Header;
+use App\Engine\Printer;
 
 
 class LoginController extends MainController
@@ -19,6 +20,7 @@ class LoginController extends MainController
 
         $this->UserModel = new UserModel();
         $this->Header = new Header();
+        $this->Printer = new Printer();
 
     }
 
@@ -46,7 +48,7 @@ class LoginController extends MainController
                 $this->Header->set('Location: blog');
             }
         }else{
-            print_r('Identifiant ou mot de passe incorrect. Redirection vers la page de connexion...');
+            $this->Printer->set('Identifiant ou mot de passe incorrect. Redirection vers la page de connexion...');
             $this->Header->set('refresh:3;url=login');
         }
 
@@ -80,17 +82,17 @@ class LoginController extends MainController
             $passwordCheck = true;
             
         }else{
-            print_r('Le mot de passe de confirmation est différent du mot de passe.');
+            $this->Printer->set('Le mot de passe de confirmation est différent du mot de passe.');
             $this->Header->set('refresh:3;url=register');
         }
 
         if ($emailCheck == true){
-            print_r('Cet e-mail est déjà utilisé.');
+            $this->Printer->set('Cet e-mail est déjà utilisé.');
             $this->Header->set('refresh:3;url=register');
         }
 
         if ($idCheck == true){
-            print_r('Cet identifiant est déjà utilisé.');
+            $this->Printer->set('Cet identifiant est déjà utilisé.');
             $this->Header->set('refresh:3;url=register');
         }
 

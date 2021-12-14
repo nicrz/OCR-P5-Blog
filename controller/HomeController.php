@@ -6,18 +6,21 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 use App\Engine\Header;
+use App\Engine\Printer;
 
 
 class HomeController extends MainController
 {
 
     private $Header;
+    private $Printer;
 
     public function __construct()
     {
         parent::__construct();
 
         $this->Header = new Header();
+        $this->Printer = new Printer();
 
     }
 
@@ -50,10 +53,10 @@ class HomeController extends MainController
             $phpmailer->Body    = filter_input(INPUT_POST, 'message');
         
             $phpmailer->send();
-            print_r('Message has been sent');
+            $this->Printer->set('Message envoyé');
             $this->Header->set('Location: home');
         } catch (Exception $e) {
-            print_r("Message could not be sent. Mailer Error: {$phpmailer->ErrorInfo}");
+            $this->Printer->set('Le message n a pas pu être envoyé');
             $this->Header->set('refresh:3;url=home');
         }
     

@@ -9,6 +9,7 @@ use App\Engine\Session;
 use App\Engine\SessionObject;
 use App\Engine\ServerObject;
 use App\Engine\Header;
+use App\Engine\Printer;
 
 
 class CommentController extends MainController
@@ -16,6 +17,7 @@ class CommentController extends MainController
     private $PostModel;
     private $CommentModel;
     private $Header;
+    private $Printer;
 
     public function __construct()
     {
@@ -25,6 +27,7 @@ class CommentController extends MainController
         $this->CommentModel = new CommentModel();
         $this->UserModel = new UserModel();
         $this->Header = new Header();
+        $this->Printer = new Printer();
 
     }
 
@@ -44,7 +47,7 @@ class CommentController extends MainController
         if ($add == true){        
             $this->Header->set('Location: ' . $server->vars['HTTP_REFERER']);         
         }else{
-            print_r('Erreur. Redirection dans 3 secondes...');
+            $this->Printer->set('Erreur. Redirection dans 3 secondes...');
             $this->Header->set('refresh:3;url=' . $server->vars['HTTP_REFERER']);   
         }
 
