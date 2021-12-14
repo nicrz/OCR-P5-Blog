@@ -54,14 +54,18 @@ Sur la page permettant de modifier un blog post, l’utilisateur a la possibilit
 
 Dans le footer menu, il doit figurer un lien pour accéder à l’administration du blog.
 
+## Identifiants administrateur
+- admin@gmail.com
+- Test
+
 ## Configuration nécessaire
 - Serveur web local ou en ligne
 - Système de gestion de base de données relationnelle MySQL
 
 ## Instructions d'installation
 
-# 1/ Importez les fichiers du projet dans votre serveur local
-# 2/ Installez Composer
-# 3/ Exécutez la commande "composer install" dans votre CLI pour charger toutes les dépendances du projet
-# 4/ Créez une base de donnée dans PHPMyAdmin puis importez le fichier "blog-p5.sql"
-# 5/ Renseignez les informations de votre base de donnée dans le fichier engine/config.php
+##### 1/ Importez les fichiers du projet dans votre serveur local
+##### 2/ Installez Composer
+##### 3/ Exécutez la commande "composer install" dans votre CLI pour charger toutes les dépendances du projet
+##### 4/ Créez une base de donnée dans PHPMyAdmin puis importez le fichier "blog-p5.sql"
+##### 5/ Renseignez les informations de votre base de donnée dans le fichier engine/config.php
