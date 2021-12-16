@@ -55,8 +55,8 @@ Sur la page permettant de modifier un blog post, l’utilisateur a la possibilit
 Dans le footer menu, il doit figurer un lien pour accéder à l’administration du blog.
 
 ## Identifiants administrateur
-- admin@gmail.com
-- Test
+- ruiz.nico64@gmail.com
+- Test64170
 
 ## Configuration nécessaire
 - Serveur web local ou en ligne
