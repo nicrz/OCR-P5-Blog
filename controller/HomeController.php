@@ -67,7 +67,7 @@ class HomeController extends MainController
 
     public function notFound()
     {
-        $this->twig->display('not_found.html.twig', ['message' => 'testzer']);
+        $this->twig->display('not_found.html.twig', ['message' => 'Erreur 404']);
     }
 
 
