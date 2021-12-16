@@ -59,15 +59,15 @@ class UserModel
 
     public function addUser($nom, $prenom, $identifiant, $email, $motdepasse)
     {
-        $oStmt = $this->oDb->prepare('INSERT INTO utilisateur (nom, prenom, identifiant, email, motdepasse)
+        $oStmt = $this->oDb->prepare('INSERT INTO utilisateur (nom, prenom, identifiant, email, motdepasse, actif, type)
         VALUES
-        (:nom, :prenom, :identifiant, :email, :motdepasse)');
+        (:nom, :prenom, :identifiant, :email, :motdepasse, 1, 1)');
         $oStmt->bindParam(':nom', $nom, \PDO::PARAM_STR);
         $oStmt->bindParam(':prenom', $prenom, \PDO::PARAM_STR);
         $oStmt->bindParam(':identifiant', $identifiant, \PDO::PARAM_STR);
         $oStmt->bindParam(':email', $email, \PDO::PARAM_STR);
         $oStmt->bindParam(':motdepasse', $motdepasse, \PDO::PARAM_STR);
-        $oStmt->debugDumpParams();
+        //$oStmt->debugDumpParams();
         $oStmt->execute();
         
     }
