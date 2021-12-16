@@ -1,49 +1,46 @@
- {% include 'base.html.twig' %}
-        <header class="masthead" style="background-image: url('assets/img/home-bg.jpg')">
-            <div class="container position-relative px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-md-10 col-lg-8 col-xl-7">
-                        <div class="site-heading">
-                            <h1>Blog</h1>
-                            <span class="subheading">Tous les articles rédigés par moi-même sur cette page</span>
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
-        <!-- Main Content-->
-        <div class="container px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-7">
-
-                {% if session.id is not empty and session.type == 2 %}
-                <center><a href="http://localhost/OCR-P5-Blog/post_add"><button class="btn btn-primary text-uppercase" style="background-color:green;">Ajouter un article</button></a></center>
-                {% endif %}
-                    {% for post in posts %}
-                    <!-- Post preview-->
-                    <div class="post-preview">
-                        
-                        <a href="./post/{{ post.id }}">
-                            <h2 class="post-title">{{ post.titre }}</h2></a>
-                            <h6 class="post-subtitle" style="font-weight: 400;">{{ post.chapo }}</h3>
-                        
-                        <p class="post-meta">
-                            Posté par
-                            <a href="#">{{ post.nom }} {{ post.prenom }}</a>
-                            le {{ post.maj }}<br />
-                            {% if session.id is not empty and session.type == 2 %}
-                            <a href="http://localhost/OCR-P5-Blog/post_edit/{{ post.id }}"><img src="http://localhost/OCR-P5-Blog/public/assets/img/edit.png" /></a>
-                            <a href="http://localhost/OCR-P5-Blog/post_delete/{{ post.id }}" onclick="return confirm('Etes-vous sûr de vouloir supprimer cet article?')"><img src="http://localhost/OCR-P5-Blog/public/assets/img/delete.png" /></a>
-                            {% endif %}
-                        </p>
-                    </div>
-                    <!-- Divider-->
-                    <hr class="my-4" />
-
-                    {% endfor %}
-                  
-                </div>
-            </div>
-        </div>
+{% include 'base.html.twig' %}
+<header class="masthead" style="background-image: url('assets/img/home-bg.jpg')">
+	<div class="container position-relative px-4 px-lg-5">
+		<div class="row gx-4 gx-lg-5 justify-content-center">
+			<div class="col-md-10 col-lg-8 col-xl-7">
+				<div class="site-heading">
+					<h1>Blog</h1>
+					<span class="subheading">Tous les articles rédigés par moi-même sur cette page</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+<!-- Main Content-->
+<div class="container px-4 px-lg-5">
+	<div class="row gx-4 gx-lg-5 justify-content-center">
+		<div class="col-md-10 col-lg-8 col-xl-7">
+			{% if session.id is not empty and session.type == 2 %}
+			<center>
+				<a href="http://localhost/OCR-P5-Blog/post_add"><button class="btn btn-primary text-uppercase" style="background-color:green;">Ajouter un article</button></a>
+			</center>
+			{% endif %}{% for post in posts %}
+			<!-- Post preview-->
+			<div class="post-preview">
+				<a href="./post/{{ post.id }}"><h2 class="post-title">{{ post.titre }}</h2></a>
+				<h6 class="post-subtitle" style="font-weight: 400;">
+					{{ post.chapo }}
+				</h3>
+				<p class="post-meta">
+					Posté par
+					<a href="#">{{ post.nom }} {{ post.prenom }}</a>
+					le {{ post.maj }}
+					<br />
+					{% if session.id is not empty and session.type == 2 %}
+					<a href="http://localhost/OCR-P5-Blog/post_edit/{{ post.id }}"><img src="http://localhost/OCR-P5-Blog/public/assets/img/edit.png" /></a>
+					<a href="http://localhost/OCR-P5-Blog/post_delete/{{ post.id }}" onclick="return confirm('Etes-vous sûr de vouloir supprimer cet article?')"><img src="http://localhost/OCR-P5-Blog/public/assets/img/delete.png" /></a>
+					{% endif %}
+				</p>
+			</div>
+			<!-- Divider-->
+			<hr class="my-4" />
+			{% endfor %}
+		</div>
+	</div>
+</div>
 {% include 'footer.html.twig' %}

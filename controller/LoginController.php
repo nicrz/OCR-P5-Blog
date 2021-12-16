@@ -98,8 +98,12 @@ class LoginController extends MainController
 
         if ((!empty($passwordCheck) && $passwordCheck == true) && empty($emailCheck) && empty($idCheck)){
             $this->UserModel->addUser($nom, $prenom, $identifiant, $email, $hashmotdepasse);
-            $this->Header->set('Location: login');
+            $this->Printer->set('Inscription réussie, redirection vers la page de connexion...');
+            $this->Header->set('refresh:3;url=login');
+
         }
+
+
 
 
     }

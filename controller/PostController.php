@@ -7,6 +7,7 @@ use App\Model\CommentModel;
 use App\Model\UserModel;
 use App\Engine\Session;
 use App\Engine\Header;
+use App\Engine\Printer;
 use App\Engine\SessionObject;
 use App\Engine\ServerObject;
 
@@ -16,6 +17,7 @@ class PostController extends MainController
     private $PostModel;
     private $CommentModel;
     private $Header;
+    private $Printer;
 
     public function __construct()
     {
@@ -25,6 +27,7 @@ class PostController extends MainController
         $this->CommentModel = new CommentModel();
         $this->UserModel = new UserModel();
         $this->Header = new Header();
+        $this->Printer = new Printer();
 
     }
 
@@ -90,8 +93,10 @@ class PostController extends MainController
         $content = filter_input(INPUT_POST, 'contenu');      
         $this->PostModel->addPost($title, $chapo, $content, $session->vars['id']);
         }
-   
-        $this->Header->set('Location: blog');       
+        
+        $this->Printer->set('Article ajouté, redirection vers le blog...');
+        $this->Header->set('refresh:3;url=blog');
+        //$this->Header->set('Location: blog');       
 
     }
 

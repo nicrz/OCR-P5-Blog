@@ -6,6 +6,7 @@ use App\Model\UserModel;
 use App\Engine\SessionObject;
 use App\Engine\ServerObject;
 use App\Engine\Header;
+use App\Engine\Printer;
 
 
 class AdminController extends MainController
@@ -13,6 +14,7 @@ class AdminController extends MainController
 
     private $UserModel;
     private $Header;
+    private $Printer;
 
     public function __construct()
     {
@@ -20,6 +22,7 @@ class AdminController extends MainController
 
         $this->UserModel = new UserModel();
         $this->Header = new Header();
+        $this->Printer = new Printer();
 
     }
 
@@ -73,8 +76,9 @@ class AdminController extends MainController
         $type = filter_input(INPUT_POST, 'type');    
         $this->UserModel->editUser($userid, $nom, $prenom, $identifiant, $email, $actif, $type);
         }
-   
-        $this->Header->set('Location: ' . $server->vars['HTTP_REFERER']);  
+        
+        $this->Printer->set('Utilisateur modifié, redirection...');
+        $this->Header->set('Location: ' . $server->vars['HTTP_REFERER']);
     }
 
 
