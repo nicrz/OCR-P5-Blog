@@ -69,3 +69,6 @@ Dans le footer menu, il doit figurer un lien pour accéder à l’administration
 ##### 3/ Exécutez la commande "composer install" dans votre CLI pour charger toutes les dépendances du projet
 ##### 4/ Créez une base de donnée dans PHPMyAdmin puis importez le fichier "blog-p5.sql"
 ##### 5/ Renseignez les informations de votre base de donnée dans le fichier engine/config.php
+##### 6/ Renseignez l'adresse racine de votre site dans le fichier controller/MainController.php à la ligne 31 :
+![image](https://user-images.githubusercontent.com/65675067/147918367-a220af23-261f-494f-a7d3-57590254ea96.png)
+
