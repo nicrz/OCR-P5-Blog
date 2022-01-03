@@ -8,8 +8,8 @@
 				</div>
 				{% if session.id is not empty and session.type == 2 %}
 				<center>
-					<a href="http://localhost/OCR-P5-Blog/post_edit/{{ post.id }}"><button class="btn btn-primary text-uppercase">Modifier cet article</button></a>
-					<a href="http://localhost/OCR-P5-Blog/post_delete/{{ post.id }}" onclick="return confirm('Etes-vous sûr de vouloir supprimer cet article?')"><button class="btn btn-primary text-uppercase" style="background-color: red;">Supprimer cet article</button></a>
+					<a href="{{ basePath }}/post_edit/{{ post.id }}"><button class="btn btn-primary text-uppercase">Modifier cet article</button></a>
+					<a href="{{ basePath }}/post_delete/{{ post.id }}" onclick="return confirm('Etes-vous sûr de vouloir supprimer cet article?')"><button class="btn btn-primary text-uppercase" style="background-color: red;">Supprimer cet article</button></a>
 				</center>
 				{% endif %}
 			</div>
@@ -60,8 +60,8 @@
 				<div style="background-color: #FF641A; padding: 0.5rem;">
 					<i>Par <strong>{{ comment.prenom }} {{ comment.nom }}</strong> le {{ comment.date }} :</i>
 					<div style="float: right">
-						<a href="http://localhost/OCR-P5-Blog/comment_validation/{{ comment.id }}" onclick="return confirm('Etes-vous sûr de vouloir valider ce commentaire?')"><img src="http://localhost/OCR-P5-Blog/public/assets/img/validate.png" /></a>
-						<a href="http://localhost/OCR-P5-Blog/comment_delete/{{ comment.id }}" onclick="return confirm('Etes-vous sûr de vouloir supprimer ce commentaire?')"><img src="http://localhost/OCR-P5-Blog/public/assets/img/delete.png" /></a>
+						<a href="{{ basePath }}/comment_validation/{{ comment.id }}" onclick="return confirm('Etes-vous sûr de vouloir valider ce commentaire?')"><img src="{{ basePath }}/public/assets/img/validate.png" /></a>
+						<a href="{{ basePath }}/comment_delete/{{ comment.id }}" onclick="return confirm('Etes-vous sûr de vouloir supprimer ce commentaire?')"><img src="{{ basePath }}/public/assets/img/delete.png" /></a>
 					</div>
 					<br />
 					{{ comment.contenu }}
@@ -83,7 +83,7 @@
 					<i>Par <strong>{{ comment.prenom }} {{ comment.nom }}</strong> le {{ comment.date }} :</i>
 					 {% if session.id is not empty and session.type == 2 %} 
 					<div style="float: right">
-						<a href="http://localhost/OCR-P5-Blog/comment_delete/{{ comment.id }}" onclick="return confirm('Etes-vous sûr de vouloir supprimer ce commentaire?')"><img src="http://localhost/OCR-P5-Blog/public/assets/img/delete.png" /></a>
+						<a href="{{ basePath }}/comment_delete/{{ comment.id }}" onclick="return confirm('Etes-vous sûr de vouloir supprimer ce commentaire?')"><img src="{{ basePath }}/public/assets/img/delete.png" /></a>
 					</div>
 					 {% endif %}
 					<br />
@@ -104,7 +104,7 @@
 							{% if session.id is not empty %}{% if awaitingcomment %} 
 							<i>Vous avez un commentaire en attente de validation.</i>
 							 {% endif %}
-							<form id="commentForm" method="POST" action="./../addcomment">
+							<form id="commentForm" method="POST" action="{{ basePath }}/addcomment">
 								<input type="hidden" name="postid" value="{{ post.id }}" />
 								<input type="hidden" name="userid" value="{{ session.id }}" />
 								<div class="form-floating">
@@ -120,7 +120,7 @@
 							{% else %}
 							<i>
 								Vous devez 
-								<strong><a href="http://localhost/OCR-P5-Blog/login">vous connecter</a></strong>
+								<strong><a href="{{ basePath }}/login">vous connecter</a></strong>
 								 pour poster un commentaire.
 							</i>
 							{% endif %}
