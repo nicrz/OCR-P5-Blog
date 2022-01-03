@@ -66,10 +66,10 @@
 					{% if user.type == 1 %}Membre{% else %}Administrateur{% endif %}
 				</td>
 				<td>
-					<a href="http://localhost/OCR-P5-Blog/user_edit/{{ user.id }}"><img src="http://localhost/OCR-P5-Blog/public/assets/img/edit.png" /></a>
+					<a href="{{ basePath }}/user_edit/{{ user.id }}"><img src="{{ basePath }}/public/assets/img/edit.png" /></a>
 				</td>
 				<td>
-					<a href="http://localhost/OCR-P5-Blog/user_delete/{{ user.id }}" onclick="return confirm('Etes-vous sûr de vouloir supprimer cet utilisateur?')"><img src="http://localhost/OCR-P5-Blog/public/assets/img/delete.png" /></a>
+					<a href="{{ basePath }}/user_delete/{{ user.id }}" onclick="return confirm('Etes-vous sûr de vouloir supprimer cet utilisateur?')"><img src="{{ basePath }}/public/assets/img/delete.png" /></a>
 				</td>
 			</tr>
 			  {% endfor %}  

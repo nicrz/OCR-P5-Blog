@@ -17,10 +17,10 @@ $AdminController = new AdminController();
 $CommentController = new CommentController();
 
 $router->setBasePath('/OCR-P5-Blog');
-$router->map('GET','/', [$HomeController, "home"]);
+$router->map('GET','/', [$HomeController, "home"], "accueil");
 $router->map('GET','/index.php', [$HomeController, "home"]);
 $router->map('GET','/home', [$HomeController, "home"]);
-$router->map('GET','/blog', [$PostController, "postsList"]);
+$router->map('GET','/blog', [$PostController, "postsList"], "blog");
 $router->map('GET','/post/[i:id]', [$PostController, "post"]);
 $router->map('GET','/login', [$LoginController, "loginPage"]);
 $router->map('GET','/register', [$LoginController, "registerPage"]);

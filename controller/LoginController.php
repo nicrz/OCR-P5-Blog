@@ -39,7 +39,12 @@ class LoginController extends MainController
         $emailSended = filter_input(INPUT_POST, 'email');
         $passwordSended = filter_input(INPUT_POST, 'pwd');
 
-        $userChecked = $this->UserModel->login($emailSended, $passwordSended);
+        if (!empty($emailSended) && !empty($passwordSended)){
+            $userChecked = $this->UserModel->login($emailSended, $passwordSended);
+        }else{
+            $this->Printer->set('Tous les champs doivent être renseignés.');
+            $this->Header->set('refresh:3;url=login');
+        }       
 
         if ($userChecked != false){
             foreach ($userChecked as $key => $value){
@@ -96,11 +101,19 @@ class LoginController extends MainController
             $this->Header->set('refresh:3;url=register');
         }
 
-        if ((!empty($passwordCheck) && $passwordCheck == true) && empty($emailCheck) && empty($idCheck)){
-            $this->UserModel->addUser($nom, $prenom, $identifiant, $email, $hashmotdepasse);
-            $this->Printer->set('Inscription réussie, redirection vers la page de connexion...');
-            $this->Header->set('refresh:3;url=login');
+        // Verification que tous les champs sont remplis
 
+        if (empty($nom) || empty($prenom) || empty($identifiant) || empty($email) || empty($motdepasse) || empty($motdepasseconf)){
+            $this->Printer->set('Tous les champs ne sont pas remplis');
+            $this->Header->set('refresh:3;url=register');
+            
+        }else{
+        
+            if ($passwordCheck == true && $emailCheck == false && $idCheck == false){
+                $this->UserModel->addUser($nom, $prenom, $identifiant, $email, $hashmotdepasse);
+                $this->Printer->set('Inscription réussie, redirection vers la page de connexion...');
+                $this->Header->set('refresh:3;url=login');   
+            }
         }
 
 

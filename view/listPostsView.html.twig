@@ -17,12 +17,12 @@
 		<div class="col-md-10 col-lg-8 col-xl-7">
 			{% if session.id is not empty and session.type == 2 %}
 			<center>
-				<a href="http://localhost/OCR-P5-Blog/post_add"><button class="btn btn-primary text-uppercase" style="background-color:green;">Ajouter un article</button></a>
+				<a href="{{ basePath }}/post_add"><button class="btn btn-primary text-uppercase" style="background-color:green;">Ajouter un article</button></a>
 			</center>
 			{% endif %}{% for post in posts %}
 			<!-- Post preview-->
 			<div class="post-preview">
-				<a href="./post/{{ post.id }}"><h2 class="post-title">{{ post.titre }}</h2></a>
+				<a href="{{ basePath }}/post/{{ post.id }}"><h2 class="post-title">{{ post.titre }}</h2></a>
 				<h6 class="post-subtitle" style="font-weight: 400;">
 					{{ post.chapo }}
 				</h3>
@@ -32,8 +32,8 @@
 					le {{ post.maj }}
 					<br />
 					{% if session.id is not empty and session.type == 2 %}
-					<a href="http://localhost/OCR-P5-Blog/post_edit/{{ post.id }}"><img src="http://localhost/OCR-P5-Blog/public/assets/img/edit.png" /></a>
-					<a href="http://localhost/OCR-P5-Blog/post_delete/{{ post.id }}" onclick="return confirm('Etes-vous sûr de vouloir supprimer cet article?')"><img src="http://localhost/OCR-P5-Blog/public/assets/img/delete.png" /></a>
+					<a href="{{ basePath }}/post_edit/{{ post.id }}"><img src="{{ basePath }}/public/assets/img/edit.png" /></a>
+					<a href="{{ basePath }}/post_delete/{{ post.id }}" onclick="return confirm('Etes-vous sûr de vouloir supprimer cet article?')"><img src="{{ basePath }}/public/assets/img/delete.png" /></a>
 					{% endif %}
 				</p>
 			</div>

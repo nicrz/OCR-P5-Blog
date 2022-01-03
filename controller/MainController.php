@@ -28,6 +28,8 @@ class MainController{
         }
         $this->twig->addExtension(new DebugExtension());
         $this->twig->addGlobal('session', $_SESSION);
+        $basePath = "http://localhost/OCR-P5-Blog";
+        $this->twig->addGlobal('basePath', $basePath);
     }
 
 }
