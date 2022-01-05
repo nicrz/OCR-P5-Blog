@@ -75,7 +75,7 @@ class PostController extends MainController
         if ($session->vars['type'] == 2){
             $this->twig->display('post_add.html.twig');
         }else{
-            $this->Header->set('Location: /OCR-P5-Blog');
+            $this->Header->set('Location: ./../blog');
         }
         
     }
@@ -114,7 +114,7 @@ class PostController extends MainController
         $this->twig->display('post_edit.html.twig', ['post' => $post, 'users' => $users]);
 
         }else{
-            $this->Header->set('Location: /OCR-P5-Blog');
+            $this->Header->set('Location: ./../blog');
         }
     }
 
@@ -150,7 +150,7 @@ class PostController extends MainController
         $this->PostModel->deletePost($request['id']);
         }
    
-        $this->Header->set('Location: /OCR-P5-Blog');
+        $this->Header->set('Location: ./../blog');
 
     }
 

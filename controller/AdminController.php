@@ -81,5 +81,21 @@ class AdminController extends MainController
         $this->Header->set('Location: ' . $server->vars['HTTP_REFERER']);
     }
 
+    // Supprime un utilisateur
+
+    public function userDelete($request)
+    {
+
+        $session = new SessionObject();
+        $server = new ServerObject();
+        if ($session->vars['type'] == 2){
+            $user = $this->UserModel->deleteUser($request['id']);
+            $this->Header->set('Location: ' . $server->vars['HTTP_REFERER']);
+        }else{
+            $this->Header->set('Location: ./../home');
+        }
+
+    }
+
 
 }

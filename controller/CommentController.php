@@ -64,7 +64,7 @@ class CommentController extends MainController
         $this->CommentModel->updateCommentStatus(1, $request['id']);
         }
    
-        $this->Header->set('Location: /OCR-P5-Blog/blog');     
+        $this->Header->set('Location: ./../blog');     
 
     }
 
@@ -79,7 +79,7 @@ class CommentController extends MainController
         $this->CommentModel->deleteComment($request['id']);
         }
    
-        $this->Header->set('Location: /OCR-P5-Blog/blog');   
+        $this->Header->set('Location: ./../blog');   
 
     }
 
