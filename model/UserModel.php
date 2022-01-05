@@ -106,4 +106,11 @@ class UserModel
         }
     }
 
+    public function deleteUser($userid)
+    {
+        $oStmt = $this->oDb->prepare('DELETE FROM utilisateur WHERE id = :userId');
+        $oStmt->bindParam(':userId', $userid, \PDO::PARAM_INT);
+        $oStmt->execute();
+    }
+
 }

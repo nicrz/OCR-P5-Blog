@@ -37,6 +37,7 @@ $router->map('POST','/post_add_confirm', [$PostController, "addPostConfirm"]);
 $router->map('GET','/post_delete/[i:id]', [$PostController, "removePost"]);
 $router->map('GET','/users_list', [$AdminController, "usersList"]);
 $router->map('GET','/user_edit/[i:id]', [$AdminController, "userEdit"]);
+$router->map('GET','/user_delete/[i:id]', [$AdminController, "userDelete"]);
 $router->map('POST','/user_edit_confirm', [$AdminController, "userEditConfirm"]);
 $router->map('POST','/contact_confirm', [$HomeController, "emailSending"]);
 
